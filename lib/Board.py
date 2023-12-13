@@ -33,8 +33,14 @@ class Board:
             return x_new // self.cells_width, y_new // self.cells_height
         return None
 
-    def get_cell_coord(self, cx, cy):  # координаты левого верхнего угла по ячейке
-        return self.ow + cx * self.cells_width, self.oh + cy * self.cells_height
+    def get_cell_coord(self, cx, cy):  #
+        """
+        Координаты левого верхнего угла по ячейке
+        :param cx: координата x в ячейках
+        :param cy: координата y в ячейках
+        :return: координаты на экране
+        """
+        return self.offset_horizontal + cx * self.cells_width, self.offset_vertical + cy * self.cells_height
 
     def set_view(self, screen_size: tuple[int, int], offset_horizontal: int, offset_vertical: int):
         """
@@ -49,3 +55,4 @@ class Board:
         self.screen_size = screen_size
         self.cells_height = (screen_size[1] - 2 * offset_vertical) // self.m
         self.cells_width = (screen_size[0] - 2 * offset_horizontal) // self.n
+

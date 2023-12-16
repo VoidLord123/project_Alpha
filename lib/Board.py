@@ -29,7 +29,7 @@ class Board:
         :return: Координаты в клетках
         """
         x_new, y_new = x - self.offset_horizontal, y - self.offset_vertical
-        if x_new <= self.cells_width * self.n and y_new <= self.cells_height * self.m:
+        if x_new <= self.cells_width * self.n and y_new <= self.cells_height * self.m and x_new >= 0 and y_new >= 0:
             return x_new // self.cells_width, y_new // self.cells_height
         return None
 

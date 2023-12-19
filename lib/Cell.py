@@ -5,14 +5,19 @@ import pygame
 
 class Cell:
 
-    def __init__(self, states:list[str]):
+    def __init__(self, states: list[str]):
+        #  Наследники Cell не должны иметь states в конструкторе
         self.states = states
         self.images = list(map(Cell.load_image, states))
-        self.image = self.images[0]
+        if len(self.states) > 0:
+            self.image = self.images[0]
+        else:
+            self.images = [pygame.surface.Surface((1, 1))]
+            self.image = self.images[0]
         self.state = 0
 
     @staticmethod
-    def load_image(name, colorkey=None):
+    def load_image(name):
         fullname = os.path.join('img', name)
         image = pygame.image.load(fullname)
         return image

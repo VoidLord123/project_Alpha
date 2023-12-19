@@ -1,5 +1,7 @@
 import pygame
 
+from lib.Cell import Cell
+
 
 class Board:
     def __init__(self, n: int, m: int, screen_size: tuple[int, int], offset_horizontal: int, offset_vertical: int):
@@ -19,7 +21,7 @@ class Board:
         self.n = n
         self.cells_height = (screen_size[1] - 2 * offset_vertical) // m
         self.cells_width = (screen_size[0] - 2 * offset_horizontal) // n
-        self.board = [[None] * self.n for _ in range(m)]
+        self.board = [[Cell([])] * self.n for _ in range(m)]
 
     def get_cell(self, x, y):
         """
@@ -55,4 +57,11 @@ class Board:
         self.screen_size = screen_size
         self.cells_height = (screen_size[1] - 2 * offset_vertical) // self.m
         self.cells_width = (screen_size[0] - 2 * offset_horizontal) // self.n
+
+    def rewrite_board(self, n, m):
+        self.n = n
+        self.m = m
+        self.board = [[Cell([])] * n for _ in range(m)]
+        self.cells_height = (self.screen_size[1] - 2 * self.offset_vertical) // n
+        self.cells_width = (self.screen_size[0] - 2 * self.offset_horizontal) // m
 

@@ -27,3 +27,8 @@ class Cell:
 
     def change_state(self, new_state: int):
         self.state = new_state
+
+
+class BaseCell(Cell):
+    def __init__(self):
+        super().__init__([])

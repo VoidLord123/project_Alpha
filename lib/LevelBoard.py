@@ -28,7 +28,7 @@ class LevelBoard(Board):
             wh_string = wh_string[6:]
             wh_string = wh_string.split(";")
             wh_string = list(map(int, wh_string))
-            self.rewrite_board(*wh_string)
+            self.rewrite_board(*wh_string, self.screen_size)
             source = list(map(lambda x: x.split(";"), source))
             for i in range(self.m):
                 for j in range(self.n):
@@ -48,15 +48,4 @@ class LevelBoard(Board):
                 # для разных ячеек
             file.writelines(map_str)
 
-    def render(self, screen):
-        y = 0
-        for i in self.board:
-            x = 0
-            for j in i:
-                screen.blit(j.get_image(self.cells_width, self.cells_height), self.get_cell_coord(x, y))
-                if self.debug_mode:
-                    pygame.draw.rect(screen, "white", (*self.get_cell_coord(x, y), self.cells_width,
-                                                       self.cells_height), 1)
 
-                x += 1
-            y += 1

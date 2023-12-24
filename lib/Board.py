@@ -1,5 +1,5 @@
 import pygame
-
+from lib.MapDict import TestWhite
 from lib.Cell import Cell
 
 
@@ -14,6 +14,7 @@ class Board:
         :param offset_vertical: Смещение по вертикали
         """
 
+        self.debug_mode = False
         self.offset_vertical = offset_vertical
         self.offset_horizontal = offset_horizontal
         self.screen_size = screen_size
@@ -21,6 +22,14 @@ class Board:
         self.n = n
         self.cells_height = (screen_size[1] - 2 * offset_vertical) // m
         self.cells_width = (screen_size[0] - 2 * offset_horizontal) // n
+        self.offset_x_sm = 0  # offset horizontal smooth
+        self.offset_y_sm = 0  # offset vertical smooth
+        if self.cells_width * m != screen_size[0]:
+            self.offset_x_sm = (screen_size[0] - self.cells_width * n - self.offset_horizontal * 2) // 2
+        if self.cells_height * m != screen_size[1]:
+            self.offset_y_sm = (screen_size[1] - self.cells_height * m - self.offset_vertical * 2) // 2
+        self.offset_vertical += self.offset_y_sm
+        self.offset_horizontal += self.offset_x_sm
         self.board = [[Cell([])] * self.n for _ in range(m)]
 
     def get_cell(self, x, y):
@@ -31,7 +40,7 @@ class Board:
         :return: Координаты в клетках
         """
         x_new, y_new = x - self.offset_horizontal, y - self.offset_vertical
-        if x_new <= self.cells_width * self.n and y_new <= self.cells_height * self.m and x_new >= 0 and y_new >= 0:
+        if self.cells_width * self.n >= x_new >= 0 and self.cells_height * self.m >= y_new >= 0:
             return x_new // self.cells_width, y_new // self.cells_height
         return None
 
@@ -58,10 +67,33 @@ class Board:
         self.cells_height = (screen_size[1] - 2 * offset_vertical) // self.m
         self.cells_width = (screen_size[0] - 2 * offset_horizontal) // self.n
 
-    def rewrite_board(self, n, m):
+    def rewrite_board(self, n, m, screen_size):
         self.n = n
         self.m = m
+        self.screen_size = screen_size
         self.board = [[Cell([])] * n for _ in range(m)]
+        self.offset_vertical -= self.offset_y_sm
+        self.offset_horizontal -= self.offset_x_sm
         self.cells_height = (self.screen_size[1] - 2 * self.offset_vertical) // n
         self.cells_width = (self.screen_size[0] - 2 * self.offset_horizontal) // m
+        self.offset_x_sm = 0
+        self.offset_y_sm = 0
+        if self.cells_width * m != self.screen_size[0]:
+            self.offset_x_sm = (self.screen_size[0] - self.cells_width * n - self.offset_horizontal * 2) // 2
+        if self.cells_height * m != self.screen_size[1]:
+            self.offset_y_sm = (self.screen_size[1] - self.cells_height * m - self.offset_vertical * 2) // 2
+        self.offset_vertical += self.offset_y_sm
+        self.offset_horizontal += self.offset_x_sm
 
+    def render(self, screen):
+        y = 0
+        for i in self.board:
+            x = 0
+            for j in i:
+                screen.blit(j.get_image(self.cells_width, self.cells_height), self.get_cell_coord(x, y))
+                if self.debug_mode:
+                    pygame.draw.rect(screen, "white", (*self.get_cell_coord(x, y), self.cells_width,
+                                                       self.cells_height), 1)
+
+                x += 1
+            y += 1

@@ -12,7 +12,7 @@ if __name__ == "__main__":
     size = w, h = (1000, 1000)
     screen = pygame.display.set_mode(size)
     board = LevelBoard(size, 100, 100)
-    board.load("test2.alphamap")
+    board.load("test1.alphamap")
     board.debug_mode = False
     running = True
     while running:

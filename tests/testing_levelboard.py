@@ -12,7 +12,7 @@ if __name__ == "__main__":
     size = w, h = (1000, 1000)
     screen = pygame.display.set_mode(size)
     board = LevelBoard(size, 100, 100)
-    board.load("test1.alphamap")
+    board.load_level("test1.alphamap")
     board.debug_mode = False
     running = True
     while running:
@@ -24,7 +24,7 @@ if __name__ == "__main__":
                     a, b = board.get_cell(*event.pos)
                     board.board[b][a].change_state(0 if board.board[b][a].state == 1 else 1)
             if event.type == pygame.KEYDOWN:
-                board.save("test2.alphamap")
+                board.save_level("test2.alphamap")
         board.render(screen)
         pygame.display.flip()
     pygame.quit()

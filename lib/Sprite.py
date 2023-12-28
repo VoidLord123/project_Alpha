@@ -6,7 +6,11 @@ class Sprite(pygame.sprite.Sprite):
         super().__init__(*group)
         self.paths = paths
         self.state = state
-        self.set_image(self.paths[self.state])
+        if len(self.paths) > 0:
+            self.set_image(self.paths[self.state])
+        else:
+            self.image = pygame.surface.Surface((10, 10))
+            self.rect = self.image.get_rect()
 
     def set_image(self, path):
         image = pygame.image.load(path)
@@ -22,3 +26,6 @@ class Sprite(pygame.sprite.Sprite):
     def set_rect(self, x, y):
         self.rect.x = x
         self.rect.y = y
+
+    def update(self, *args):
+        pass

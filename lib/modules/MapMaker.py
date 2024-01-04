@@ -1,7 +1,7 @@
 import pygame
 from lib.LevelBoard import LevelBoard
 from lib.Board import Board
-from lib.MapDict import LINKS
+from lib.constants import LINKS
 
 
 class MapMaker:

@@ -1,5 +1,5 @@
 import pygame
-from lib.MapDict import LINKS
+from lib.constants import LINKS
 from lib.Board import Board
 
 """

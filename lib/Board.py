@@ -1,5 +1,4 @@
 import pygame
-from lib.constants import TestWhite
 from lib.Cell import Cell
 
 
@@ -24,6 +23,7 @@ class Board:
         self.cells_width = (screen_size[0] - 2 * offset_horizontal) // n
         self.offset_x_sm = 0  # offset horizontal smooth
         self.offset_y_sm = 0  # offset vertical smooth
+        # В нормальной ситуации эти два доп оффсеты будут равны 0))). Нооооооо есть допустим 480p )))
         if self.cells_width * m != screen_size[0]:
             self.offset_x_sm = (screen_size[0] - self.cells_width * n - self.offset_horizontal * 2) // 2
         if self.cells_height * m != screen_size[1]:

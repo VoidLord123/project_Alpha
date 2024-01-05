@@ -93,9 +93,10 @@ class LevelBoard(Board):
                     groups.append(self.groups[item[2:]])
                     i += 1
                 if name == "no-name":
-                    sprite_type(x, y, vx, vy, *groups, state=state)
+                    sprite_type(x, y, vx, vy, self.cells_width, self.cells_height, *groups, state=state)
                 else:
-                    self.named_sprites[name] = sprite_type(x, y, vx, vy, *groups, state=state)
+                    self.named_sprites[name] = sprite_type(x, y, vx, vy, self.cells_width, self.cells_height,
+                                                           *groups, state=state)
 
     def get_cell_float(self, x, y):
         x_new, y_new = x - self.offset_horizontal, y - self.offset_vertical

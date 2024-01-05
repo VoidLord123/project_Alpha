@@ -1,6 +1,6 @@
-import pygame
-from lib.MapDict import LINKS
+from lib.constants import LINKS, SPRITES, GROUPS
 from lib.Board import Board
+from lib.SpriteGroup import SpriteGroup
 
 """
 Класс уровня. Имеет сохранения и загрузки в файлы .alphamap
@@ -18,6 +18,9 @@ class LevelBoard(Board):
         """
         super().__init__(1, 1, screen_size, offset_horizontal, offset_vertical)
         self.debug_mode = False  # режим отладки для простоты работы
+        self.named_sprites = {}
+        self.groups = {}
+        self.all_sprites = SpriteGroup()
 
     def load(self, filename: str):
         with open(filename, encoding="utf-8", mode="r") as file:
@@ -48,4 +51,92 @@ class LevelBoard(Board):
                 # для разных ячеек
             file.writelines(map_str)
 
+    def load_sprites(self, filename):
+        with open(filename, mode='r', encoding="utf-8") as file:
+            info = file.readlines()
+            info = list(map(lambda x1: x1.strip("\n").replace("    ", "$").replace("\t", "$"), info))
+            info = info[1:]
+            i = 0
+            while info[i].startswith("$"):
+                item = info[i]
+                item = item[1:]
+                item = item.split(": ")
+                self.groups[item[0]] = GROUPS[item[1]]()
+                i += 1
+            i += 1
+            while i < len(info) and info[i].startswith("$"):
+                item = info[i]
+                item = item[1:]
+                item = item.split(": ")
+                name = item[0]
+                sprite_type = SPRITES[item[1]]
+                i += 1
+                item = info[i]
+                x = float(item.split(": ")[1])
+                i += 1
+                item = info[i]
+                y = float(item.split(": ")[1])
+                x, y = self.get_cell_coord(x, y)
+                i += 1
+                item = info[i]
+                vx = float(item.split(": ")[1])
+                i += 1
+                item = info[i]
+                vy = float(item.split(": ")[1])
+                i += 1
+                item = info[i]
+                state = int(item.split(": ")[1])
+                groups = [self.all_sprites]
+                i += 1
+                while i < len(info) and item.startswith("$$"):
+                    item = info[i]
+                    groups.append(self.groups[item[2:]])
+                    i += 1
+                if name == "no-name":
+                    sprite_type(x, y, vx, vy, *groups, state=state)
+                else:
+                    self.named_sprites[name] = sprite_type(x, y, vx, vy, *groups, state=state)
 
+    def get_cell_float(self, x, y):
+        x_new, y_new = x - self.offset_horizontal, y - self.offset_vertical
+        if self.cells_width * self.n >= x_new >= 0 and self.cells_height * self.m >= y_new >= 0:
+            return x_new / self.cells_width, y_new / self.cells_height
+        return None
+
+    def save_sprites(self, filename):
+        with open(filename, mode='w', encoding="utf-8") as file:
+            string = "groups:\n"
+            grp_to_string = {}
+            grp = GROUPS.items()
+            for i, j in grp:
+                grp_to_string[j] = i
+
+            spr = SPRITES.items()
+            spr_to_string = {}
+            for i, j in spr:
+                spr_to_string[j] = i
+
+            for i, j in self.groups.items():
+                string += f"    {i}: {grp_to_string[j.__class__]}\n"
+            self_grp = self.groups.items()
+            self_grp_to_string = {}
+            for i, j in self_grp:
+                self_grp_to_string[j] = i
+            string += "sprites:\n"
+
+            names_items = self.named_sprites.items()
+            names = {}
+            for i, j in names_items:
+                names[j] = i
+
+            for i in self.all_sprites.sprites():
+                string += f"    {names.get(i, 'no-name')}: {spr_to_string[i.__class__]}\n"
+                string += f"        x: {self.get_cell_float(i.rect.x, i.rect.y)[0]}\n"
+                string += f"        y: {self.get_cell_float(i.rect.x, i.rect.y)[1]}\n"
+                string += f"        vx: {i.vx}\n"
+                string += f"        vy: {i.vy}\n"
+                string += f"        state: {i.state}\n"
+                for j in i.groups():
+                    if self_grp_to_string.get(j, False):
+                        string += "        " + self_grp_to_string.get(j) + "\n"
+            file.write(string)

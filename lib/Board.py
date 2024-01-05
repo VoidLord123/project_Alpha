@@ -1,5 +1,5 @@
 import pygame
-from lib.MapDict import TestWhite
+from lib.constants import TestWhite
 from lib.Cell import Cell
 
 

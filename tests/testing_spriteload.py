@@ -14,8 +14,6 @@ if __name__ == "__main__":
     board = LevelBoard(size, 100, 100)
     board.load("test1.alphamap")
     board.debug_mode = False
-    board.groups["test"] = TestGroup1()
-    board.named_sprites["tst"] = TestSprite1(200, 200, 0, 0, board.groups["test"], board.all_sprites)
     running = True
     while running:
         for event in pygame.event.get():
@@ -26,7 +24,11 @@ if __name__ == "__main__":
                     a, b = board.get_cell(*event.pos)
                     board.board[b][a].change_state(0 if board.board[b][a].state == 1 else 1)
             if event.type == pygame.KEYDOWN:
-                board.save_sprites("test2.alphaspm")
+                board.load_sprites("test2.alphaspm")
+                for i in board.all_sprites.sprites():
+                    print(i.rect.x, i.rect.y)
+                    print(board.named_sprites)
+                    print(board.groups)
         board.render(screen)
         board.all_sprites.draw(screen)
         pygame.display.flip()

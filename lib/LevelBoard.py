@@ -53,7 +53,49 @@ class LevelBoard(Board):
 
     def load_sprites(self, filename):
         with open(filename, mode='r', encoding="utf-8") as file:
-            pass
+            info = file.readlines()
+            info = list(map(lambda x1: x1.strip("\n").replace("    ", "$").replace("\t", "$"), info))
+            info = info[1:]
+            i = 0
+            while info[i].startswith("$"):
+                item = info[i]
+                item = item[1:]
+                item = item.split(": ")
+                self.groups[item[0]] = GROUPS[item[1]]()
+                i += 1
+            i += 1
+            while i < len(info) and info[i].startswith("$"):
+                item = info[i]
+                item = item[1:]
+                item = item.split(": ")
+                name = item[0]
+                sprite_type = SPRITES[item[1]]
+                i += 1
+                item = info[i]
+                x = float(item.split(": ")[1])
+                i += 1
+                item = info[i]
+                y = float(item.split(": ")[1])
+                x, y = self.get_cell_coord(x, y)
+                i += 1
+                item = info[i]
+                vx = float(item.split(": ")[1])
+                i += 1
+                item = info[i]
+                vy = float(item.split(": ")[1])
+                i += 1
+                item = info[i]
+                state = int(item.split(": ")[1])
+                groups = [self.all_sprites]
+                i += 1
+                while i < len(info) and item.startswith("$$"):
+                    item = info[i]
+                    groups.append(self.groups[item[2:]])
+                    i += 1
+                if name == "no-name":
+                    sprite_type(x, y, vx, vy, *groups, state=state)
+                else:
+                    self.named_sprites[name] = sprite_type(x, y, vx, vy, *groups, state=state)
 
     def get_cell_float(self, x, y):
         x_new, y_new = x - self.offset_horizontal, y - self.offset_vertical
@@ -81,8 +123,14 @@ class LevelBoard(Board):
             for i, j in self_grp:
                 self_grp_to_string[j] = i
             string += "sprites:\n"
+
+            names_items = self.named_sprites.items()
+            names = {}
+            for i, j in names_items:
+                names[j] = i
+
             for i in self.all_sprites.sprites():
-                string += f"    {self.named_sprites.get(i, 'no-name')}: {spr_to_string[i.__class__]}\n"
+                string += f"    {names.get(i, 'no-name')}: {spr_to_string[i.__class__]}\n"
                 string += f"        x: {self.get_cell_float(i.rect.x, i.rect.y)[0]}\n"
                 string += f"        y: {self.get_cell_float(i.rect.x, i.rect.y)[1]}\n"
                 string += f"        vx: {i.vx}\n"

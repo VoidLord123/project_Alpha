@@ -1,3 +1,5 @@
+import pygame.draw
+
 from lib.constants import LINKS, SPRITES, GROUPS
 from lib.Board import Board
 from lib.SpriteGroup import SpriteGroup
@@ -141,3 +143,28 @@ class LevelBoard(Board):
                     if self_grp_to_string.get(j, False):
                         string += "        " + self_grp_to_string.get(j) + "\n"
             file.write(string)
+
+    def get_collide_objects(self):
+        collide_list = []
+        y = 0
+        for i in self.board:
+            x = 0
+            for j in i:
+                if j.is_collide:
+                    a = j.get_image(self.cells_width, self.cells_height).get_rect()
+                    a.x, a.y = self.get_cell_coord(x, y)
+                    collide_list.append(a)
+                x += 1
+            y += 1
+
+        return collide_list
+    
+    def render(self, screen):
+        super().render(screen)
+        for i in self.get_collide_objects():
+            pygame.draw.rect(screen, "white", i, 2)
+
+    def get_collide_sprites(self):
+        sprites = self.groups.get("collide", None)
+        if sprites is not None:
+            return sprites

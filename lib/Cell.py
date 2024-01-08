@@ -4,6 +4,7 @@ import pygame
 
 
 class Cell:
+    is_collide = False
 
     def __init__(self, states: list[str]):
         #  Наследники Cell не должны иметь states в конструкторе

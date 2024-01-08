@@ -6,8 +6,9 @@ class Sprite(pygame.sprite.Sprite):
     cell_width = 1
     cell_height = 1
 
-    def __init__(self, x, y, vx, vy, wc, hc,  *group, state=0):
+    def __init__(self, x, y, vx, vy, wc, hc,  *group, state=0, linked_levelboard=None):
         super().__init__(*group)
+        self.linked_levelboard = linked_levelboard
         self.hc = hc
         self.wc = wc
         self.vx = vx
@@ -19,6 +20,7 @@ class Sprite(pygame.sprite.Sprite):
             self.image = pygame.surface.Surface((10, 10))
             self.scale()
             self.rect = self.image.get_rect()
+            self.mask = pygame.mask.from_surface(self.image)
         self.set_rect(x, y)
 
     def set_image(self, path):
@@ -27,10 +29,11 @@ class Sprite(pygame.sprite.Sprite):
         self.scale()
         try:
             x, y = self.rect.x, self.rect.y
-            self.rect = image.get_rect()
+            self.rect = self.image.get_rect()
             self.set_rect(x, y)
         except AttributeError:
-            self.rect = image.get_rect()
+            self.rect = self.image.get_rect()
+        self.mask = pygame.mask.from_surface(self.image)
 
     def change_state(self, new_state=None):
         if new_state:
@@ -47,5 +50,5 @@ class Sprite(pygame.sprite.Sprite):
         pass
 
     def scale(self):
-        new_image = pygame.transform.scale(self.image, (self.wc, self.hc))
+        new_image = pygame.transform.scale(self.image, (self.wc * self.cell_width, self.hc * self.cell_height))
         self.image = new_image

@@ -3,7 +3,7 @@ from lib.SpriteGroup import SpriteGroup
 
 
 class TestSprite1(Sprite):
-    paths = ["img/test_yellow.png"]
+    paths = ["img/test_sprite.png"]
     cell_width = 1
     cell_height = 1
 

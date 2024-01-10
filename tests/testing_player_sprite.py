@@ -3,6 +3,7 @@ from lib.LevelBoard import LevelBoard
 from lib.SpriteGroup import SpriteGroup
 from lib.entities.PlayerSprite import PlayerSprite
 from lib.entities.TestSprites import TestSprite1
+from lib.constants import FPS
 
 """
 Тестирование и демонстрация класса LevelBoard
@@ -38,5 +39,5 @@ if __name__ == "__main__":
         board.render(screen)
         board.all_sprites.draw(screen)
         pygame.display.flip()
-        clock.tick(100)
+        clock.tick(FPS)
     pygame.quit()

@@ -14,6 +14,7 @@ class Sprite(pygame.sprite.Sprite):
         self.vx = vx
         self.vy = vy
         self.state = state
+        self.name = ""  # Да некоторые спрайты для корректной работы должны быть именованными.
         if len(self.paths) > 0:
             self.set_image(self.paths[self.state])
         else:

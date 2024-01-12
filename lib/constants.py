@@ -1,3 +1,4 @@
+from lib.entities.PortalSprite import PortalSprite
 from lib.entities.TestBlock import *
 from lib.Cell import BaseCell
 from lib.entities.TestSprites import *
@@ -11,6 +12,7 @@ LINKS["N"] = BaseCell
 SPRITES = {}
 
 SPRITES["tst"] = TestSprite1
+SPRITES["P"] = PortalSprite
 
 
 GROUPS = {}

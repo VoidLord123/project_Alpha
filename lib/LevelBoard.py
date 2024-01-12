@@ -99,7 +99,6 @@ class LevelBoard(Board):
                 else:
                     self.named_sprites[name] = sprite_type(x, y, vx, vy, self.cells_width, self.cells_height,
                                                            *groups, state=state)
-                    self.named_sprites[name].name = name  # name, name, name, name. Нужно для некоторых возможностей.
 
     def get_cell_float(self, x, y):
         x_new, y_new = x - self.offset_horizontal, y - self.offset_vertical

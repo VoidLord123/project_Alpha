@@ -1,0 +1,16 @@
+groups:
+    collide: BaseGroup
+sprites:
+    no-name: player
+        x: 2.227272727272727
+        y: 5.0
+        vx: 0.1
+        vy: 0.1
+        state: 0
+    no-name: tst
+        x: 4.5
+        y: 2.227272727272727
+        vx: 0
+        vy: 0
+        state: 0
+        collide

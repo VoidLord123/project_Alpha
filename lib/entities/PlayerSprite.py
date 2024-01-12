@@ -1,15 +1,15 @@
 import pygame
 from lib.Sprite import Sprite
-from lib.constants import MAX_VELOCITY_PLAYER_X, ACCELERATION_PLAYER_X, ACCELERATION_PLAYER_Y, MAX_GRAVITY_SPEED, \
-    VELOCITY_PLAYER_JUMP
+
+ACCELERATION_PLAYER_X = 0.1
+ACCELERATION_PLAYER_Y = 0.1
+MAX_VELOCITY_PLAYER_X = 10
+MAX_GRAVITY_SPEED = 10
+VELOCITY_PLAYER_JUMP = -10
 
 
 class PlayerSprite(Sprite):
     paths = ["img/test_yellow.png"]
-
-    def __init__(self, x, y, vx, vy, wc, hc,  *group, state=0, linked_levelboard=None):
-        super().__init__(x, y, vx, vy, wc, hc, *group, state=state, linked_levelboard=linked_levelboard)
-        self.jump = False
 
     def check_collides(self):
         collide_list = self.linked_levelboard.get_collide_objects()
@@ -23,6 +23,7 @@ class PlayerSprite(Sprite):
         return False
 
     def update(self, *args):
+        super().update(*args)
         keys = pygame.key.get_pressed()
         if keys[pygame.K_RIGHT]:
             self.vx += ACCELERATION_PLAYER_X

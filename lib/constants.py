@@ -1,26 +1,14 @@
 from lib.entities.TestBlock import *
 from lib.Cell import BaseCell
 from lib.entities.TestSprites import *
-
-LINKS = {}
-
-LINKS["W"] = TestWhite  # Добавлено в целях тестирования. В будущем будут настоящие блоки
-LINKS["B"] = TestBlue
-LINKS["N"] = BaseCell
-
-SPRITES = {}
-
-SPRITES["tst"] = TestSprite1
+from lib.SpriteGroup import SpriteGroup
+from lib.entities.PlayerSprite import PlayerSprite
 
 
-GROUPS = {}
+LINKS = {"W": TestWhite, "B": TestBlue, "N": BaseCell}
 
-GROUPS["testGroup1"] = TestGroup1
+SPRITES = {"tst": TestSprite1, "player": PlayerSprite}
+
+GROUPS = {"testGroup1": TestGroup1, "BaseGroup": SpriteGroup}
 
 FPS = 100
-
-ACCELERATION_PLAYER_X = 0.1
-ACCELERATION_PLAYER_Y = 0.1
-MAX_VELOCITY_PLAYER_X = 10
-MAX_GRAVITY_SPEED = 10
-VELOCITY_PLAYER_JUMP = -10

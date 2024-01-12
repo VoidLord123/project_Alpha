@@ -2,7 +2,7 @@ import pygame
 from lib.modules.MapMaker import MapMaker
 
 """
-Тестирование и демонстрация класса LevelBoard
+Тестирование и демонстрация класса MapMaker
 """
 
 

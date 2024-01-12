@@ -6,7 +6,7 @@ from lib.entities.TestSprites import TestSprite1
 from lib.constants import FPS
 
 """
-Тестирование и демонстрация класса LevelBoard
+Тестирование и демонстрация класса PlayerSprite
 """
 
 
@@ -33,11 +33,12 @@ if __name__ == "__main__":
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
-
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                board.save_sprites("test1.alphaspm")
         screen.fill('black')
         board.all_sprites.update()
         board.render(screen)
-        board.all_sprites.draw(screen)
+        # board.all_sprites.draw(screen)
         pygame.display.flip()
         clock.tick(FPS)
     pygame.quit()

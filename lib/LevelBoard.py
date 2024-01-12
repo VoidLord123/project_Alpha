@@ -90,15 +90,18 @@ class LevelBoard(Board):
                 state = int(item.split(": ")[1])
                 groups = [self.all_sprites]
                 i += 1
+                item = info[i]
                 while i < len(info) and item.startswith("$$"):
                     item = info[i]
                     groups.append(self.groups[item[2:]])
                     i += 1
+
                 if name == "no-name":
-                    sprite_type(x, y, vx, vy, self.cells_width, self.cells_height, *groups, state=state)
+                    sprite_type(x, y, vx, vy, self.cells_width, self.cells_height, *groups, state=state,
+                                linked_levelboard=self)
                 else:
                     self.named_sprites[name] = sprite_type(x, y, vx, vy, self.cells_width, self.cells_height,
-                                                           *groups, state=state)
+                                                           *groups, state=state, linked_levelboard=self)
                     self.named_sprites[name].name = name  # name, name, name, name. Нужно для некоторых возможностей.
 
     def get_cell_float(self, x, y):
@@ -159,13 +162,15 @@ class LevelBoard(Board):
             y += 1
 
         return collide_list
-    
-    def render(self, screen):
-        super().render(screen)
-        for i in self.get_collide_objects():
-            pygame.draw.rect(screen, "white", i, 2)
 
     def get_collide_sprites(self):
         sprites = self.groups.get("collide", None)
         if sprites is not None:
             return sprites
+
+    def render(self, screen):
+        super().render(screen)
+        self.all_sprites.draw(screen)
+
+    def update(self, *args):
+        self.all_sprites.update(*args)

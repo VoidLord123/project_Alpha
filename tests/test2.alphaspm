@@ -1,0 +1,10 @@
+groups:
+    test: testGroup1
+sprites:
+    tst: tst
+        x: 1.0909090909090908
+        y: 1.0909090909090908
+        vx: 0
+        vy: 0
+        state: 0
+        test

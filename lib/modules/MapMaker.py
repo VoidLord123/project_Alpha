@@ -96,3 +96,6 @@ class MapMaker:
             if i[0]:
                 pygame.draw.rect(self.screen, "red", self.get_rect((i[1], i[2]), 1, 1), 3)
 
+    def render(self, screen):
+        self.draw()
+        screen.blit(self.screen, (0, 0))

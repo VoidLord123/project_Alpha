@@ -10,6 +10,13 @@ sprites:
         vy: 0.1
         state: 0
         player
+    no-name: kill
+        x: 4.5
+        y: 2.227272727272727
+        vx: 0
+        vy: 0
+        state: 0
+        action
     exit1: exit
         x: 5
         y: 3

@@ -2,27 +2,19 @@ from lib.entities.PortalSprite import PortalSprite
 from lib.entities.TestBlock import *
 from lib.Cell import BaseCell
 from lib.entities.TestSprites import *
+from lib.SpriteGroup import SpriteGroup
+from lib.entities.PlayerSprite import PlayerSprite
+from lib.entities.ExitSprite import ExitSprite
+from lib.entities.KillSprite import KillSprite
 
-LINKS = {}
 
-LINKS["W"] = TestWhite  # Добавлено в целях тестирования. В будущем будут настоящие блоки
-LINKS["B"] = TestBlue
-LINKS["N"] = BaseCell
+LINKS = {"W": TestWhite, "B": TestBlue, "N": BaseCell}
 
-SPRITES = {}
+SPRITES = {"tst": TestSprite1, "player": PlayerSprite, "exit": ExitSprite, "kill": KillSprite}
 
-SPRITES["tst"] = TestSprite1
+
+GROUPS = {"testGroup1": TestGroup1, "BaseGroup": SpriteGroup}
+
 SPRITES["P"] = PortalSprite
 
-
-GROUPS = {}
-
-GROUPS["testGroup1"] = TestGroup1
-
 FPS = 100
-
-ACCELERATION_PLAYER_X = 0.1
-ACCELERATION_PLAYER_Y = 0.1
-MAX_VELOCITY_PLAYER_X = 10
-MAX_GRAVITY_SPEED = 10
-VELOCITY_PLAYER_JUMP = -10

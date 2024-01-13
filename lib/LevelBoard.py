@@ -11,7 +11,7 @@ from lib.SpriteGroup import SpriteGroup
 
 
 class LevelBoard(Board):
-    def __init__(self, screen_size: tuple[int, int], offset_horizontal: int, offset_vertical: int):
+    def __init__(self, screen_size: tuple[int, int], offset_horizontal: int, offset_vertical: int, linked_loader=None):
         """
         Инициализирует клеточное поле, но не загружает его. Если его не загрузить использовать нельзя
         :param screen_size: Размер экрана
@@ -19,6 +19,7 @@ class LevelBoard(Board):
         :param offset_vertical: Отступ по вертикали
         """
         super().__init__(1, 1, screen_size, offset_horizontal, offset_vertical)
+        self.linked_loader = linked_loader
         self.debug_mode = False  # режим отладки для простоты работы
         self.named_sprites = {}
         self.groups = {}
@@ -90,15 +91,20 @@ class LevelBoard(Board):
                 state = int(item.split(": ")[1])
                 groups = [self.all_sprites]
                 i += 1
-                while i < len(info) and item.startswith("$$"):
+                item = info[i]
+                while i < len(info) and info[i].startswith("$$"):
                     item = info[i]
                     groups.append(self.groups[item[2:]])
                     i += 1
+
                 if name == "no-name":
-                    sprite_type(x, y, vx, vy, self.cells_width, self.cells_height, *groups, state=state)
+                    sprite_type(x, y, vx, vy, self.cells_width, self.cells_height, *groups, state=state,
+                                linked_levelboard=self)
                 else:
                     self.named_sprites[name] = sprite_type(x, y, vx, vy, self.cells_width, self.cells_height,
-                                                           *groups, state=state)
+                                                           *groups, state=state, linked_levelboard=self)
+                    self.named_sprites[name].name = name  # name, name, name, name. Нужно для некоторых возможностей.
+
 
     def get_cell_float(self, x, y):
         x_new, y_new = x - self.offset_horizontal, y - self.offset_vertical
@@ -158,13 +164,25 @@ class LevelBoard(Board):
             y += 1
 
         return collide_list
-    
-    def render(self, screen):
-        super().render(screen)
-        for i in self.get_collide_objects():
-            pygame.draw.rect(screen, "white", i, 2)
 
     def get_collide_sprites(self):
         sprites = self.groups.get("collide", None)
         if sprites is not None:
             return sprites
+
+    def get_player_sprites(self):
+        sprites = self.groups.get("player", None)
+        if sprites is not None:
+            return sprites
+
+    def get_action_sprites(self):
+        sprites = self.groups.get("action", None)
+        if sprites is not None:
+            return sprites
+
+    def render(self, screen):
+        super().render(screen)
+        self.all_sprites.draw(screen)
+
+    def update(self, *args):
+        self.all_sprites.update(*args)

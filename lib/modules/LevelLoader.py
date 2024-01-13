@@ -60,4 +60,8 @@ class LevelLoader:
                 exit_name, name = source[i].split(": ")
                 self.current_exits[exit_name[1:]] = name
                 i += 1
-
+            i += 1
+            while i < len(source) and source[i].startswith("$"):
+                source_name, link_name = source[i].split(" -> ")
+                self.board.named_sprites[source_name[1:]].link = link_name
+                i += 1

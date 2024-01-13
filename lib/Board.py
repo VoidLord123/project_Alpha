@@ -24,7 +24,7 @@ class Board:
         self.offset_x_sm = 0  # offset horizontal smooth
         self.offset_y_sm = 0  # offset vertical smooth
         # В нормальной ситуации эти два доп оффсеты будут равны 0))). Нооооооо есть допустим 480p )))
-        if self.cells_width * m != screen_size[0]:
+        if self.cells_width * n != screen_size[0]:
             self.offset_x_sm = (screen_size[0] - self.cells_width * n - self.offset_horizontal * 2) // 2
         if self.cells_height * m != screen_size[1]:
             self.offset_y_sm = (screen_size[1] - self.cells_height * m - self.offset_vertical * 2) // 2
@@ -66,6 +66,14 @@ class Board:
         self.screen_size = screen_size
         self.cells_height = (screen_size[1] - 2 * offset_vertical) // self.m
         self.cells_width = (screen_size[0] - 2 * offset_horizontal) // self.n
+        self.offset_x_sm = 0
+        self.offset_y_sm = 0
+        if self.cells_width * self.n != self.screen_size[0]:
+            self.offset_x_sm = (self.screen_size[0] - self.cells_width * self.n - self.offset_horizontal * 2) // 2
+        if self.cells_height * self.m != self.screen_size[1]:
+            self.offset_y_sm = (self.screen_size[1] - self.cells_height * self.m - self.offset_vertical * 2) // 2
+        self.offset_vertical += self.offset_y_sm
+        self.offset_horizontal += self.offset_x_sm
 
     def rewrite_board(self, n, m, screen_size):
         self.n = n
@@ -78,7 +86,7 @@ class Board:
         self.cells_width = (self.screen_size[0] - 2 * self.offset_horizontal) // m
         self.offset_x_sm = 0
         self.offset_y_sm = 0
-        if self.cells_width * m != self.screen_size[0]:
+        if self.cells_width * n != self.screen_size[0]:
             self.offset_x_sm = (self.screen_size[0] - self.cells_width * n - self.offset_horizontal * 2) // 2
         if self.cells_height * m != self.screen_size[1]:
             self.offset_y_sm = (self.screen_size[1] - self.cells_height * m - self.offset_vertical * 2) // 2

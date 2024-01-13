@@ -11,7 +11,7 @@ from lib.SpriteGroup import SpriteGroup
 
 
 class LevelBoard(Board):
-    def __init__(self, screen_size: tuple[int, int], offset_horizontal: int, offset_vertical: int):
+    def __init__(self, screen_size: tuple[int, int], offset_horizontal: int, offset_vertical: int, linked_loader=None):
         """
         Инициализирует клеточное поле, но не загружает его. Если его не загрузить использовать нельзя
         :param screen_size: Размер экрана
@@ -19,6 +19,7 @@ class LevelBoard(Board):
         :param offset_vertical: Отступ по вертикали
         """
         super().__init__(1, 1, screen_size, offset_horizontal, offset_vertical)
+        self.linked_loader = linked_loader
         self.debug_mode = False  # режим отладки для простоты работы
         self.named_sprites = {}
         self.groups = {}
@@ -91,7 +92,7 @@ class LevelBoard(Board):
                 groups = [self.all_sprites]
                 i += 1
                 item = info[i]
-                while i < len(info) and item.startswith("$$"):
+                while i < len(info) and info[i].startswith("$$"):
                     item = info[i]
                     groups.append(self.groups[item[2:]])
                     i += 1
@@ -165,6 +166,16 @@ class LevelBoard(Board):
 
     def get_collide_sprites(self):
         sprites = self.groups.get("collide", None)
+        if sprites is not None:
+            return sprites
+
+    def get_player_sprites(self):
+        sprites = self.groups.get("player", None)
+        if sprites is not None:
+            return sprites
+
+    def get_action_sprites(self):
+        sprites = self.groups.get("action", None)
         if sprites is not None:
             return sprites
 

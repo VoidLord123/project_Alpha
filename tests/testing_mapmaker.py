@@ -11,7 +11,7 @@ if __name__ == "__main__":
     pygame.init()
     size = w, h = (1280, 720)
     screen = pygame.display.set_mode(size)
-    mapmaker = MapMaker(size, "test1.alphamap")
+    mapmaker = MapMaker(size, "test2.alphamap")
     # mapmaker.main_board.debug_mode = True
     running = True
     while running:

@@ -1,10 +1,19 @@
 groups:
-    test: testGroup1
+    collide: BaseGroup
+    action: BaseGroup
+    player: BaseGroup
 sprites:
-    tst: tst
-        x: 1.0909090909090908
-        y: 1.0909090909090908
+    no-name: player
+        x: 2.227272727272727
+        y: 5.0
+        vx: 0.1
+        vy: 0.1
+        state: 0
+        player
+    exit1: exit
+        x: 5
+        y: 3
         vx: 0
         vy: 0
         state: 0
-        test
+        action

@@ -1,5 +1,4 @@
 from lib.AnimatedSprite import AnimatedSprite
-from lib.Sprite import Sprite
 import pygame
 
 

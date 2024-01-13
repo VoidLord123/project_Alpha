@@ -3,7 +3,7 @@ from lib.modules.LevelLoader import LevelLoader
 from lib.constants import FPS
 
 """
-Тестирование и демонстрация класса LevelLoader
+Тестирование и демонстрация класса LevelLoader а так же некоторых классов спрайтов
 """
 
 
@@ -25,7 +25,7 @@ if __name__ == "__main__":
                 screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
                 size = w, h = screen.get_size()
                 level_loader.set_screen_size(size, (level_loader.board.n, level_loader.board.m))
-                level_loader.load_level("test1")
+                level_loader.load_level(level_loader.current_level_name)
 
         level_loader.update()
         level_loader.render(screen)

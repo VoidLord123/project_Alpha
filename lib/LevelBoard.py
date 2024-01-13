@@ -105,6 +105,7 @@ class LevelBoard(Board):
                                                            *groups, state=state, linked_levelboard=self)
                     self.named_sprites[name].name = name  # name, name, name, name. Нужно для некоторых возможностей.
 
+
     def get_cell_float(self, x, y):
         x_new, y_new = x - self.offset_horizontal, y - self.offset_vertical
         if self.cells_width * self.n >= x_new >= 0 and self.cells_height * self.m >= y_new >= 0:

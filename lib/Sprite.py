@@ -14,7 +14,6 @@ class Sprite(pygame.sprite.Sprite):
         self.vx = vx
         self.vy = vy
         self.state = state
-        self.name = ""  # Да некоторые спрайты для корректной работы должны быть именованными.
         if len(self.paths) > 0:
             self.set_image(self.paths[self.state])
         else:
@@ -36,12 +35,12 @@ class Sprite(pygame.sprite.Sprite):
             self.rect = self.image.get_rect()
         self.mask = pygame.mask.from_surface(self.image)
 
-    def change_state(self, new_state=None):
+    def change_state(self, new_state=None, interval=1):
         if new_state:
             self.state = new_state
         else:
-            self.state = (self.state + 1) % len(self.paths)
-        self.set_image(self.paths[self.state])
+            self.state = (self.state + 1) % (len(self.paths) * interval)
+        self.set_image(self.paths[self.state // interval])
 
     def set_rect(self, x, y):
         self.rect.x = x

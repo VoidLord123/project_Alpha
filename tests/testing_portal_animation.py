@@ -18,6 +18,7 @@ if __name__ == "__main__":
     board.debug_mode = False
     running = True
     board.groups["collide"] = SpriteGroup()
+    board.named_sprites["P"].linked_levelboard = None
     clock = pygame.time.Clock()
     while running:
         for event in pygame.event.get():

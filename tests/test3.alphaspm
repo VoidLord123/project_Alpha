@@ -1,7 +1,7 @@
 groups:
     test: testGroup1
 sprites:
-    P: P
+    P: exit
         x: 7
         y: 7
         vx: 0

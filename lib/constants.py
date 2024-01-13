@@ -1,4 +1,3 @@
-from lib.entities.PortalSprite import PortalSprite
 from lib.entities.TestBlock import *
 from lib.Cell import BaseCell
 from lib.entities.TestSprites import *
@@ -14,7 +13,5 @@ SPRITES = {"tst": TestSprite1, "player": PlayerSprite, "exit": ExitSprite, "kill
 
 
 GROUPS = {"testGroup1": TestGroup1, "BaseGroup": SpriteGroup}
-
-SPRITES["P"] = PortalSprite
 
 FPS = 100

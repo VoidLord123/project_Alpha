@@ -1,6 +1,7 @@
 import pygame.draw
 
-from lib.constants import LINKS, SPRITES, GROUPS
+from lib.Cell import Cell
+from lib.constants import LINKS, SPRITES, GROUPS, BASIC_GROUPS, CLASS_NAME_TO_CLASS
 from lib.Board import Board
 from lib.SpriteGroup import SpriteGroup
 
@@ -18,6 +19,7 @@ class LevelBoard(Board):
         :param offset_horizontal: Отступ по горизонтали
         :param offset_vertical: Отступ по вертикали
         """
+
         super().__init__(1, 1, screen_size, offset_horizontal, offset_vertical)
         self.linked_loader = linked_loader
         self.debug_mode = False  # режим отладки для простоты работы
@@ -96,7 +98,6 @@ class LevelBoard(Board):
                     item = info[i]
                     groups.append(self.groups[item[2:]])
                     i += 1
-
                 if name == "no-name":
                     sprite_type(x, y, vx, vy, self.cells_width, self.cells_height, *groups, state=state,
                                 linked_levelboard=self)
@@ -104,7 +105,6 @@ class LevelBoard(Board):
                     self.named_sprites[name] = sprite_type(x, y, vx, vy, self.cells_width, self.cells_height,
                                                            *groups, state=state, linked_levelboard=self)
                     self.named_sprites[name].name = name  # name, name, name, name. Нужно для некоторых возможностей.
-
 
     def get_cell_float(self, x, y):
         x_new, y_new = x - self.offset_horizontal, y - self.offset_vertical
@@ -149,6 +149,24 @@ class LevelBoard(Board):
                     if self_grp_to_string.get(j, False):
                         string += "        " + self_grp_to_string.get(j) + "\n"
             file.write(string)
+
+    def add_sprite(self, sprite):
+        class_name = sprite.__class__.__name__
+        group = BASIC_GROUPS[class_name]
+        self.groups.setdefault(group, SpriteGroup())
+        find = self.find_obj(sprite.rect.x, sprite.rect.y)
+        if find:
+            find[0].kill()
+        sprite = CLASS_NAME_TO_CLASS[class_name](sprite.rect.x * self.cells_width + self.offset_horizontal,
+                                                 sprite.rect.y * self.cells_height + self.offset_vertical, sprite.vx,
+                                                 sprite.vy, self.cells_width, self.cells_height, self.all_sprites,
+                                                 self.groups[BASIC_GROUPS[class_name]], state=sprite.state)
+
+    def find_obj(self, x, y):
+        find = list(filter(lambda z: (x * self.cells_width + self.offset_horizontal,
+                                      y * self.cells_height + self.offset_vertical) == (z.rect.x, z.rect.y),
+                           self.all_sprites.sprites()))
+        return find
 
     def get_collide_objects(self):
         collide_list = []

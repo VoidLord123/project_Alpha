@@ -58,3 +58,8 @@ class Sprite(pygame.sprite.Sprite):
     def scale(self):
         new_image = pygame.transform.scale(self.image, (self.wc * self.cell_width, self.hc * self.cell_height))
         self.image = new_image
+
+    def get_image(self, wc, hc):
+        self.wc, self.hc = wc, hc
+        self.scale()
+        return self.image

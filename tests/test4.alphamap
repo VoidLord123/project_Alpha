@@ -1,10 +1,10 @@
 size: 12; 9
-B;N;N;N;N;N;B;N;N;N;N;B
-B;N;N;N;N;N;B;N;N;N;N;B
-B;N;N;N;N;N;B;N;N;N;N;B
-B;N;N;N;N;N;B;N;N;N;N;B
-B;N;N;N;N;N;B;N;N;W;W;B
-B;N;N;N;N;N;B;N;N;N;N;B
-B;N;N;N;N;N;B;N;N;N;N;B
+B;N;N;N;N;N;N;N;N;N;N;B
+B;N;N;N;N;W;W;N;N;N;N;B
+B;N;N;N;N;N;N;N;N;N;N;B
+B;W;W;N;N;N;N;N;N;W;W;B
+B;W;W;N;N;N;N;N;N;N;N;B
+B;N;N;N;N;N;N;W;W;N;N;B
+B;N;N;N;W;W;N;N;N;N;N;B
 B;N;N;N;N;N;N;N;N;N;N;B
 B;B;B;B;B;B;B;B;B;B;B;B

@@ -13,14 +13,15 @@ class MovedSprite(Sprite):
         self.vy = -1 if self.state == 2 else 1 if self.state == 3 else 0
 
     def check_collides(self):
-        collide_list = self.linked_levelboard.get_collide_objects()
-        collide_sprites = self.linked_levelboard.get_collide_sprites()
-        for i in collide_list:
-            if self.rect.colliderect(i):
-                return True
-        for i in collide_sprites.sprites():
-            if i is not self and pygame.sprite.collide_mask(self, i):
-                return True
+        if self.linked_levelboard is not None:
+            collide_list = self.linked_levelboard.get_collide_objects()
+            collide_sprites = self.linked_levelboard.get_collide_sprites()
+            for i in collide_list:
+                if self.rect.colliderect(i):
+                    return True
+            for i in collide_sprites.sprites():
+                if i is not self and pygame.sprite.collide_mask(self, i):
+                    return True
         return False
 
     def update(self, *args):

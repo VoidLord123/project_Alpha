@@ -4,30 +4,51 @@ groups:
     player: BaseGroup
 sprites:
     no-name: player
-        x: 2.227272727272727
+        x: 2.2253521126760565
         y: 5.0
         vx: 0.1
         vy: 0.1
         state: 0
         player
     exit1: exit
-        x: 10
-        y: 2
-        vx: 0
-        vy: 0
+        x: 10.0
+        y: 2.0
+        vx: 0.0
+        vy: 0.0
         state: 0
         action
     button1: button
-        x: 4
-        y: 7
+        x: 4.0
+        y: 7.0
+        vx: 0.0
+        vy: 0.0
+        state: 0
+        action
+    move1: move
+        x: 6.0
+        y: 7.0
+        vx: 0.0
+        vy: 0.0
+        state: 1
+        collide
+    no-name: exit
+        x: 10.0
+        y: 7.0
         vx: 0
         vy: 0
         state: 0
         action
-    move1: move
-        x: 6
-        y: 7
+    no-name: kill
+        x: 8.0
+        y: 7.0
         vx: 0
         vy: 0
-        state: 1
+        state: 0
+        collide
+    no-name: kill
+        x: 9.0
+        y: 7.0
+        vx: 0
+        vy: 0
+        state: 0
         collide

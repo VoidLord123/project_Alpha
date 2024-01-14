@@ -1,6 +1,6 @@
 import pygame
 
-from lib.Cell import Cell
+from lib.Cell import Cell, BaseCell
 from lib.LevelBoard import LevelBoard
 from lib.Board import Board
 from lib.SpriteGroup import SpriteGroup
@@ -19,6 +19,7 @@ class MapMaker:
                                       self.main_board.offset_horizontal + self.main_board.cells_width * 8,
                                       self.main_board.offset_vertical + self.main_board.cells_height)
         self.inner_board.load(filename)
+        self.inner_board.load_sprites(filename.split('.')[0] + '.alphaspm')
         self.screen = pygame.surface.Surface(screen_size)
         self.blocks = list(LINKS.keys())
         self.inner_board.debug_mode = True  # тут это уже значит не режим отладки, а рисование сетки
@@ -48,7 +49,7 @@ class MapMaker:
                                 state=state)
             if class_name == "MovedSprite":
                 state = (state + 1) % 2
-            self.main_board.board[y][x + 28] = Cell([])
+            self.main_board.board[y][x + 28] = BaseCell()
             self.sprite_group.add(sprite)
         self.items = self.blocks + self.sprites
 
@@ -79,6 +80,7 @@ class MapMaker:
                         break
             if (cx, cy) in [(1, 1), (2, 1), (3, 1), (4, 1)]:
                 self.inner_board.save(self.filename)
+                self.inner_board.save_sprites(self.filename.split('.')[0] + '.alphaspm')
             if changed_block:
                 for i in self.items:
                     for typee in range(len(self.blocks_dict[i])):
@@ -96,7 +98,7 @@ class MapMaker:
                 sprite = SPRITES[self.chosen_block[0]](cx, cy, *BASIC_PARAMS[SPRITES[self.chosen_block[0]].__name__],
                                                        self.main_board.cells_width, self.main_board.cells_height,
                                                        state=self.chosen_block[1])
-                self.inner_board.board[cy][cx] = sprite
+                self.inner_board.board[cy][cx] = BaseCell()
                 self.inner_board.add_sprite(sprite)
 
     def get_rect(self, start_cell, w, h):  # все в ячейках

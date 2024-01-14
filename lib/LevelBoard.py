@@ -157,7 +157,6 @@ class LevelBoard(Board):
         find = self.find_obj(sprite.rect.x, sprite.rect.y)
         if find:
             find[0].kill()
-        print(self.groups)
         sprite = CLASS_NAME_TO_CLASS[class_name](sprite.rect.x * self.cells_width + self.offset_horizontal,
                                                  sprite.rect.y * self.cells_height + self.offset_vertical, sprite.vx,
                                                  sprite.vy, self.cells_width, self.cells_height, self.all_sprites,

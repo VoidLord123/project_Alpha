@@ -12,14 +12,15 @@ class PlayerSprite(Sprite):
     paths = ["img/test_yellow.png"]
 
     def check_collides(self):
-        collide_list = self.linked_levelboard.get_collide_objects()
-        collide_sprites = self.linked_levelboard.get_collide_sprites()
-        for i in collide_list:
-            if self.rect.colliderect(i):
-                return True
-        for i in collide_sprites.sprites():
-            if pygame.sprite.collide_mask(self, i):
-                return True
+        if self.linked_levelboard is not None:
+            collide_list = self.linked_levelboard.get_collide_objects()
+            collide_sprites = self.linked_levelboard.get_collide_sprites()
+            for i in collide_list:
+                if self.rect.colliderect(i):
+                    return True
+            for i in collide_sprites.sprites():
+                if pygame.sprite.collide_mask(self, i):
+                    return True
         return False
 
     def update(self, *args):

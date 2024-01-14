@@ -1,7 +1,10 @@
 import pygame
+
+from lib.Cell import Cell
 from lib.LevelBoard import LevelBoard
 from lib.Board import Board
-from lib.constants import LINKS
+from lib.SpriteGroup import SpriteGroup
+from lib.constants import LINKS, SPRITES, BASIC_PARAMS
 
 
 class MapMaker:
@@ -11,7 +14,6 @@ class MapMaker:
         self.filename = filename
         self.screen_size = screen_size
         self.set_screen_size(screen_size)
-
         self.main_board = Board(32, 18, screen_size, self.horizontal_offset, self.vertical_offset)
         self.inner_board = LevelBoard(self.screen_size,
                                       self.main_board.offset_horizontal + self.main_board.cells_width * 8,
@@ -20,15 +22,35 @@ class MapMaker:
         self.screen = pygame.surface.Surface(screen_size)
         self.blocks = list(LINKS.keys())
         self.inner_board.debug_mode = True  # тут это уже значит не режим отладки, а рисование сетки
+        self.sprites = list(SPRITES.keys())[1:] + ["move"]
+        self.sprite_group = SpriteGroup()
         self.blocks_dict = {}
-        self.main_block = ""
+        self.chosen_block = ""
         x, y = 0, 1
         for i in self.blocks:
             x += 1
             x %= 6
             y = 7 + x // 6
-            self.blocks_dict[i] = (False, x, y)
+            self.blocks_dict.setdefault(i, [])
+            self.blocks_dict[i].append((False, x, y))
             self.main_board.board[y][x] = LINKS[i]()
+        x, y = -1, 3
+        state = 0
+        for i in self.sprites:
+            x += 1
+            x %= 4
+            y = y + (1 if x == 0 else 0)
+            class_name = SPRITES[i].__name__
+            self.blocks_dict.setdefault(i, [])
+            self.blocks_dict[i].append((False, x + 28, y))
+            sprite = SPRITES[i]((x + 28) * self.main_board.cells_width, y * self.main_board.cells_height,
+                                *BASIC_PARAMS[class_name], self.main_board.cells_width, self.main_board.cells_height,
+                                state=state)
+            if class_name == "MovedSprite":
+                state = (state + 1) % 2
+            self.main_board.board[y][x + 28] = Cell([])
+            self.sprite_group.add(sprite)
+        self.items = self.blocks + self.sprites
 
     def set_screen_size(self, screen_size):
         self.screen_size = screen_size
@@ -48,21 +70,34 @@ class MapMaker:
         if self.main_board.get_cell(*pos):
             cx, cy = self.main_board.get_cell(*pos)
             changed_block = None
-            for i in self.blocks:
-                if self.blocks_dict[i][1] == cx and self.blocks_dict[i][2] == cy:
-                    self.blocks_dict[i] = (True, cx, cy)
-                    changed_block = i
-                    self.main_block = i
-                    break
+            for i in self.items:
+                for typee in range(len(self.blocks_dict[i])):
+                    if self.blocks_dict[i][typee][1] == cx and self.blocks_dict[i][typee][2] == cy:
+                        self.blocks_dict[i][typee] = (True, cx, cy)
+                        changed_block = [i, typee]
+                        self.chosen_block = [i, typee]
+                        break
             if (cx, cy) in [(1, 1), (2, 1), (3, 1), (4, 1)]:
                 self.inner_board.save(self.filename)
             if changed_block:
-                for i in self.blocks:
-                    if changed_block != i:
-                        self.blocks_dict[i] = (False, self.blocks_dict[i][1], self.blocks_dict[i][2])
-        if self.main_block and self.inner_board.get_cell(*pos):
+                for i in self.items:
+                    for typee in range(len(self.blocks_dict[i])):
+                        if changed_block[0] != i or (changed_block[0] == i and changed_block[1] != typee):
+                            self.blocks_dict[i][typee] = (False, self.blocks_dict[i][typee][1],
+                                                          self.blocks_dict[i][typee][2])
+        if self.chosen_block and self.inner_board.get_cell(*pos):
             cx, cy = self.inner_board.get_cell(*pos)
-            self.inner_board.board[cy][cx] = LINKS[self.main_block]()
+            if len(self.chosen_block[0]) == 1:
+                find = self.inner_board.find_obj(cx, cy)
+                if find:
+                    find[0].kill()
+                self.inner_board.board[cy][cx] = LINKS[self.chosen_block[0]]()
+            else:
+                sprite = SPRITES[self.chosen_block[0]](cx, cy, *BASIC_PARAMS[SPRITES[self.chosen_block[0]].__name__],
+                                                       self.main_board.cells_width, self.main_board.cells_height,
+                                                       state=self.chosen_block[1])
+                self.inner_board.board[cy][cx] = sprite
+                self.inner_board.add_sprite(sprite)
 
     def get_rect(self, start_cell, w, h):  # все в ячейках
         start_cell_real = self.main_board.get_cell_coord(*start_cell)
@@ -77,10 +112,12 @@ class MapMaker:
         self.screen.blit(text1, coord1)
 
     def draw(self):
+        self.screen.fill('black')
         self.main_board.render(self.screen)
         pygame.draw.rect(self.screen, "white", self.get_rect((1, 1), 4, 1), 2)
         self.draw_text("Сохранить", "white", (1, 1), self.main_board.cells_height - 15)
         self.draw_text("Блоки:", "White", (1, 5), self.main_board.cells_height - 15)
+        self.draw_text("Спрайты:", "White", (28, 2), self.main_board.cells_height - 15)
         x1 = 1
         y1 = 7
         for i in range(12):
@@ -89,12 +126,22 @@ class MapMaker:
         for i in range(7):
             pygame.draw.line(self.screen, "white", self.main_board.get_cell_coord(x1 + i, y1),
                              self.main_board.get_cell_coord(x1 + i, y1 + 10))
+        x1, y1 = 28, 4
+        for i in range(5):
+            pygame.draw.line(self.screen, "white", self.main_board.get_cell_coord(x1, y1 + i),
+                             self.main_board.get_cell_coord(x1 + 4, y1 + i))
+        for i in range(5):
+            pygame.draw.line(self.screen, "white", self.main_board.get_cell_coord(x1 + i, y1),
+                             self.main_board.get_cell_coord(x1 + i, y1 + 4))
         self.inner_board.render(self.screen)
-        for j in self.blocks:
-            i = self.blocks_dict[j]
-            # print(i)
-            if i[0]:
-                pygame.draw.rect(self.screen, "red", self.get_rect((i[1], i[2]), 1, 1), 3)
+        self.sprite_group.draw(self.screen)
+        for i in self.items:
+            for typee in range(len(self.blocks_dict[i])):
+                # print(i)
+                el = self.blocks_dict[i][typee]
+                if el[0]:
+                    pygame.draw.rect(self.screen, "red", self.get_rect((el[1], el[2]),
+                                                                       1, 1), 3)
 
     def render(self, screen):
         self.draw()

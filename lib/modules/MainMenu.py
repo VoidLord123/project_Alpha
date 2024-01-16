@@ -8,14 +8,15 @@ from lib.LevelBoard import LevelBoard
 
 
 class MainMenu:
-    def __init__(self, screen_size):
+    def __init__(self, screen_size, linked_game=None):
+        self.linked_game = linked_game
         self.screen = None
         self.screen_size = screen_size
         self.horizontal_offset = 0
         self.vertical_offset = 0
         self.set_screen_size(screen_size)
         self.board = Board(32, 18, screen_size, self.horizontal_offset, self.vertical_offset)
-        self.mode = "endgame"
+        self.mode = "menu"
         self.all_sprites = SpriteGroup()
         self.level_name = ""
         self.tick = 0
@@ -37,6 +38,8 @@ class MainMenu:
 
     def set_screen_size(self, screen_size):
         self.screen_size = screen_size
+        self.vertical_offset = 0
+        self.horizontal_offset = 0
         if round(screen_size[0] / screen_size[1], 2) != round(16 / 9, 2) and 16 / 9 <= \
                 screen_size[0] / screen_size[1]:
             self.horizontal_offset = screen_size[0] - round(self.screen_size[1] / 9 * 16)
@@ -86,7 +89,9 @@ class MainMenu:
             self.draw_text("Справка по проекту Альфа", "white", (16, 2), self.board.cells_height)
             self.draw_text("Управление стрелками, порталы проход в следующий уровень", "white",
                            (16, 4), self.board.cells_height)
-            self.draw_text("Рекомендуется играть в полноэкранном режиме", "white", (16, 5), self.board.cells_height)
+            self.draw_text("Escape - выход в главное меню. Escape в главном меню выход из игры", "white",
+                           (16, 5), self.board.cells_height * 0.75)
+            self.draw_text("Рекомендуется играть в полноэкранном режиме", "white", (16, 6), self.board.cells_height)
             self.draw_text("Создатели:", "white", (16, 7), self.board.cells_height)
             self.draw_text("Калинин Иван(VoidLord)", "white", (16, 9), self.board.cells_height)
             # Я убрал убогую подпись 123 которая в моем гите чисто потому что оригинальный ник занят был(
@@ -154,9 +159,8 @@ class MainMenu:
         for i in actions.keys():
             if actions[i].collidepoint(x, y):
                 if i == "start":
-                    print("Start")  # Временные заглушки пока не реализован основной класс
+                    self.linked_game.start_official_game()
                 elif i == "maker":
-                    print("MapMaker")
                     font = pygame.font.Font("fonts/pixel_font2.ttf", 25)
                     cx, cy = self.board.get_cell_coord(11.75, 7)
                     InputSprite(cx, cy, font, 20, 1, self.all_sprites, height=self.board.cells_height)
@@ -170,17 +174,24 @@ class MainMenu:
                 elif i == "info":
                     self.mode = "info"
                 elif i == "full-screen":
-                    print("full-screen")
+                    if self.linked_game:
+                        self.linked_game.toggle_fullscreen()
                 elif i == "back":
                     self.mode = "menu"
                 elif i == "next1":
                     if self.all_sprites.sprites()[0].get_text() != "":
                         self.level_name = self.all_sprites.sprites()[0].get_text()
-                        self.all_sprites = SpriteGroup()
-                        self.mode = "creating2"
-                        font = pygame.font.Font("fonts/pixel_font2.ttf", 25)
-                        cx, cy = self.board.get_cell_coord(15.5, 7)
-                        InputSprite(cx, cy, font, 2, 1, self.all_sprites, height=self.board.cells_height)
+
+                        if not os.path.exists(os.path.join("user_levels",
+                                                           self.all_sprites.sprites()[0].get_text() + ".alphamap")):
+                            self.all_sprites = SpriteGroup()
+                            self.mode = "creating2"
+                            font = pygame.font.Font("fonts/pixel_font2.ttf", 25)
+                            cx, cy = self.board.get_cell_coord(15.5, 7)
+                            InputSprite(cx, cy, font, 2, 1, self.all_sprites, height=self.board.cells_height)
+                        else:
+                            self.linked_game.change_to_mapmaker(os.path.join(
+                                "user_levels", self.all_sprites.sprites()[0].get_text()))
                     else:
                         self.tick = 255
                 elif i == "next2":
@@ -196,17 +207,24 @@ class MainMenu:
                                                   "collide": SpriteGroup()}
                             level_board.save(f"./user_levels/{self.level_name}.alphamap")
                             level_board.save_sprites(f"./user_levels/{self.level_name}.alphaspm")
-                            # Здесь ссылка на пока неготовый Game
-                    except Exception:
+                            self.linked_game.change_to_mapmaker(os.path.join(
+                                "user_levels", self.level_name))
+                    except Exception as e:
                         self.tick = 255
+                        print(e)
 
                 elif i == "next3":
                     text = self.all_sprites.sprites()[0].get_text()
                     if not os.path.exists(os.path.join("user_levels", text + ".alphamap")) or text == "":
                         self.tick = 255
                     else:
-                        pass
+                        self.linked_game.load_user_level(text)
                 elif i == "return":
                     self.mode = "menu"
                 elif i == "reset":
-                    print("reset")
+                    with open("save", mode="w", encoding="utf-8") as file:
+                        file.write("test1")
+
+    def render(self, screen):
+        self.draw()
+        screen.blit(self.screen, (0, 0))

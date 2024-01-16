@@ -3,3 +3,80 @@ groups:
     action: BaseGroup
     collide: BaseGroup
 sprites:
+    no-name: player
+        x: 2.0
+        y: 31.0
+        vx: 0.1
+        vy: 0.1
+        state: 0
+        player
+    exit1: exit
+        x: 30.0
+        y: 22.0
+        vx: 0.0
+        vy: 0.0
+        state: 0
+        action
+    no-name: kill
+        x: 12.0
+        y: 31.0
+        vx: 0.0
+        vy: 0.0
+        state: 0
+        collide
+    no-name: kill
+        x: 13.0
+        y: 31.0
+        vx: 0.0
+        vy: 0.0
+        state: 0
+        collide
+    no-name: kill
+        x: 14.0
+        y: 31.0
+        vx: 0.0
+        vy: 0.0
+        state: 0
+        collide
+    no-name: kill
+        x: 15.0
+        y: 31.0
+        vx: 0.0
+        vy: 0.0
+        state: 0
+        collide
+    no-name: kill
+        x: 16.0
+        y: 31.0
+        vx: 0.0
+        vy: 0.0
+        state: 0
+        collide
+    no-name: kill
+        x: 17.0
+        y: 31.0
+        vx: 0.0
+        vy: 0.0
+        state: 0
+        collide
+    no-name: kill
+        x: 18.0
+        y: 31.0
+        vx: 0.0
+        vy: 0.0
+        state: 0
+        collide
+    no-name: kill
+        x: 19.0
+        y: 31.0
+        vx: 0.0
+        vy: 0.0
+        state: 0
+        collide
+    no-name: kill
+        x: 20.0
+        y: 31.0
+        vx: 0.0
+        vy: 0.0
+        state: 0
+        collide

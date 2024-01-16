@@ -84,6 +84,8 @@ class Board:
         self.offset_horizontal -= self.offset_x_sm
         self.cells_height = (self.screen_size[1] - 2 * self.offset_vertical) // n
         self.cells_width = (self.screen_size[0] - 2 * self.offset_horizontal) // m
+        self.cells_width, self.cells_height = (
+            min(self.cells_width, self.cells_height), min(self.cells_width, self.cells_height))
         self.offset_x_sm = 0
         self.offset_y_sm = 0
         if self.cells_width * n != self.screen_size[0]:

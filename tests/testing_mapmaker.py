@@ -19,7 +19,7 @@ if __name__ == "__main__":
             if event.type == pygame.QUIT:
                 running = False
             if event.type == pygame.MOUSEBUTTONDOWN:
-                mapmaker.on_click(event.pos)
+                mapmaker.on_click(*event.pos)
         mapmaker.draw()
         screen.blit(mapmaker.screen, (0, 0))
         pygame.display.flip()

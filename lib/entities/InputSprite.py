@@ -3,7 +3,7 @@ import pygame
 
 
 class InputSprite(Sprite):
-    def __init__(self, x, y, font: pygame.font.Font, max_len, border, *group, standard_symbol="A", height, color="white"):
+    def __init__(self, x, y, font: pygame.font.Font, max_len, border, *group, standard_symbol="A", height, color="black"):
         super().__init__(x, y, 0, 0, 0, 0, *group)
         self.height = height
         self.color = color
@@ -34,6 +34,7 @@ class InputSprite(Sprite):
     def generate_image(self):
         text_image = self.font.render(self.text, 1, self.color)
         image = pygame.surface.Surface(self.size)
+        image.fill("white")
         image.blit(text_image, (self.border * 2, self.border * 2))
         if self.border > 0:
             pygame.draw.rect(image, self.color, (0, 0, *self.size), self.border)

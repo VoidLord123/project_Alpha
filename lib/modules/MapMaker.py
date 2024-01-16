@@ -119,26 +119,26 @@ class MapMaker:
         self.screen.blit(text1, coord1)
 
     def draw(self):
-        self.screen.fill('black')
+        self.screen.fill('white')
         self.main_board.render(self.screen)
-        pygame.draw.rect(self.screen, "white", self.get_rect((1, 1), 4, 1), 2)
-        self.draw_text("Сохранить", "white", (1, 1), self.main_board.cells_height - 15)
-        self.draw_text("Блоки:", "White", (1, 5), self.main_board.cells_height - 15)
-        self.draw_text("Спрайты:", "White", (28, 2), self.main_board.cells_height - 15)
+        pygame.draw.rect(self.screen, "black", self.get_rect((1, 1), 4, 1), 2)
+        self.draw_text("Сохранить", "black", (1, 1), self.main_board.cells_height - 15)
+        self.draw_text("Блоки:", "black", (1, 5), self.main_board.cells_height - 15)
+        self.draw_text("Спрайты:", "black", (28, 2), self.main_board.cells_height - 15)
         x1 = 1
         y1 = 7
         for i in range(12):
-            pygame.draw.line(self.screen, "white", self.main_board.get_cell_coord(x1, y1 + i),
+            pygame.draw.line(self.screen, "black", self.main_board.get_cell_coord(x1, y1 + i),
                              self.main_board.get_cell_coord(x1 + 6, y1 + i))
         for i in range(7):
-            pygame.draw.line(self.screen, "white", self.main_board.get_cell_coord(x1 + i, y1),
+            pygame.draw.line(self.screen, "black", self.main_board.get_cell_coord(x1 + i, y1),
                              self.main_board.get_cell_coord(x1 + i, y1 + 10))
         x1, y1 = 28, 4
         for i in range(5):
-            pygame.draw.line(self.screen, "white", self.main_board.get_cell_coord(x1, y1 + i),
+            pygame.draw.line(self.screen, "black", self.main_board.get_cell_coord(x1, y1 + i),
                              self.main_board.get_cell_coord(x1 + 4, y1 + i))
         for i in range(5):
-            pygame.draw.line(self.screen, "white", self.main_board.get_cell_coord(x1 + i, y1),
+            pygame.draw.line(self.screen, "black", self.main_board.get_cell_coord(x1 + i, y1),
                              self.main_board.get_cell_coord(x1 + i, y1 + 4))
         self.inner_board.render(self.screen)
         self.sprite_group.draw(self.screen)

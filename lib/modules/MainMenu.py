@@ -67,6 +67,7 @@ class MainMenu:
             return text1
         dx, dy = round(self.board.cells_width * 0.1), round(self.board.cells_height * 0.1)
         image = pygame.surface.Surface((round(text1.get_width() + dx * 2), round(text1.get_height() + dy * 2)))
+        image.fill("white")
         pygame.draw.rect(image, color, (0, 0, image.get_width(), image.get_height()), 1 if dx // 4 == 0 else dx // 4)
         image.blit(text1, (round(dx), round(dy)))
         return image
@@ -76,52 +77,52 @@ class MainMenu:
             self.tick -= 1
 
     def draw(self):
-        self.screen.fill("black")
+        self.screen.fill("white")
         self.board.render(self.screen)
         if self.mode == "menu":
-            self.draw_text("Главное меню", "white", (16, 2), self.board.cells_height * 3)
-            self.draw_text("Начать игру", "white", (16, 7), self.board.cells_height * 1, True)
-            self.draw_text("Создатель уровней", "white", (16, 8.5), self.board.cells_height, True)
-            self.draw_text("Загрузить уровень", "white", (16, 10), self.board.cells_height, True)
-            self.draw_text("info", "white", (30.5, 17), self.board.cells_height, True),
-            self.draw_text("full-screen", "white", (3.25, 17), self.board.cells_height, True)
+            self.draw_text("Главное меню", "black", (16, 2), self.board.cells_height * 3)
+            self.draw_text("Начать игру", "black", (16, 7), self.board.cells_height * 1, True)
+            self.draw_text("Создатель уровней", "black", (16, 8.5), self.board.cells_height, True)
+            self.draw_text("Загрузить уровень", "black", (16, 10), self.board.cells_height, True)
+            self.draw_text("info", "black", (30.5, 17), self.board.cells_height, True),
+            self.draw_text("full-screen", "black", (3.25, 17), self.board.cells_height, True)
         elif self.mode == "info":
-            self.draw_text("Справка по проекту Альфа", "white", (16, 2), self.board.cells_height)
-            self.draw_text("Управление стрелками, порталы проход в следующий уровень", "white",
+            self.draw_text("Справка по проекту Альфа", "black", (16, 2), self.board.cells_height)
+            self.draw_text("Управление стрелками, порталы проход в следующий уровень", "black",
                            (16, 4), self.board.cells_height)
-            self.draw_text("Escape - выход в главное меню. Escape в главном меню выход из игры", "white",
+            self.draw_text("Escape - выход в главное меню. Escape в главном меню выход из игры", "black",
                            (16, 5), self.board.cells_height * 0.75)
-            self.draw_text("Рекомендуется играть в полноэкранном режиме", "white", (16, 6), self.board.cells_height)
-            self.draw_text("Создатели:", "white", (16, 7), self.board.cells_height)
-            self.draw_text("Калинин Иван(VoidLord)", "white", (16, 9), self.board.cells_height)
+            self.draw_text("Рекомендуется играть в полноэкранном режиме", "black", (16, 6), self.board.cells_height)
+            self.draw_text("Создатели:", "black", (16, 7), self.board.cells_height)
+            self.draw_text("Калинин Иван(VoidLord)", "black", (16, 9), self.board.cells_height)
             # Я убрал убогую подпись 123 которая в моем гите чисто потому что оригинальный ник занят был(
-            self.draw_text("Галюшин Ярослав(D4rkSn0w)", "white", (16, 10), self.board.cells_height)
-            self.draw_text("Назад", "white", (16, 16), self.board.cells_height, True)
+            self.draw_text("Галюшин Ярослав(D4rkSn0w)", "black", (16, 10), self.board.cells_height)
+            self.draw_text("Назад", "black", (16, 16), self.board.cells_height, True)
         elif self.mode == "creating1":
-            self.draw_text("Введите имя уровня", "white", (16, 5), self.board.cells_height)
-            self.draw_text("Далее", "white", (16, 10), self.board.cells_height, True)
+            self.draw_text("Введите имя уровня", "black", (16, 5), self.board.cells_height)
+            self.draw_text("Далее", "black", (16, 10), self.board.cells_height, True)
             if self.tick > 0:
                 self.draw_text("Ошибка! Введена пустая строка!", "red", (16, 12),
                                self.board.cells_height, alpha=self.tick)
         elif self.mode == "creating2":
-            self.draw_text("Введите сторону квадрата в клетках", "white", (16, 5), self.board.cells_height)
-            self.draw_text("Далее", "white", (16, 10), self.board.cells_height, True)
+            self.draw_text("Введите сторону квадрата в клетках", "black", (16, 5), self.board.cells_height)
+            self.draw_text("Далее", "black", (16, 10), self.board.cells_height, True)
             if self.tick > 0:
                 self.draw_text("Ошибка! Введено не число или некорректное число!", "red", (16, 12),
                                self.board.cells_height, alpha=self.tick)
         elif self.mode == "load":
-            self.draw_text("Введите имя уровня", "white", (16, 5), self.board.cells_height)
-            self.draw_text("Далее", "white", (16, 10), self.board.cells_height, True)
+            self.draw_text("Введите имя уровня", "black", (16, 5), self.board.cells_height)
+            self.draw_text("Далее", "black", (16, 10), self.board.cells_height, True)
             if self.tick > 0:
                 self.draw_text("Ошибка! Введена пустая строка или уровень не найден!", "red", (16, 12),
                                self.board.cells_height, alpha=self.tick)
         elif self.mode == "endgame":
-            self.draw_text("Поздравляем! Вы сбежали из симуляции!", "white", (16, 3), self.board.cells_height * 1.5)
-            self.draw_text("Спасибо за прохождение!", "white", (16, 5), self.board.cells_height)
-            self.draw_text("Вы можете сбросить сохранение или сразу вернуться в главное меню", "white",
+            self.draw_text("Поздравляем! Вы сбежали из симуляции!", "black", (16, 3), self.board.cells_height * 1.5)
+            self.draw_text("Спасибо за прохождение!", "black", (16, 5), self.board.cells_height)
+            self.draw_text("Вы можете сбросить сохранение или сразу вернуться в главное меню", "black",
                            (16, 7), self.board.cells_height)
-            self.draw_text("Выйти", "white", (12, 9), self.board.cells_height, True)
-            self.draw_text("Сбросить", "white", (20, 9), self.board.cells_height, True)
+            self.draw_text("Выйти", "black", (12, 9), self.board.cells_height, True)
+            self.draw_text("Сбросить", "black", (20, 9), self.board.cells_height, True)
 
         self.all_sprites.draw(self.screen)
 
@@ -129,32 +130,32 @@ class MainMenu:
         actions = {}
         if self.mode == "menu":
             actions = {
-                "start": self.get_rect_by_text("Начать игру", "white", (16, 7), self.board.cells_height, True),
-                "maker": self.get_rect_by_text("Создатель уровней", "white", (16, 8.5), self.board.cells_height, True),
-                "load": self.get_rect_by_text("Загрузить уровень", "white", (16, 10), self.board.cells_height, True),
-                "info": self.get_rect_by_text("info", "white", (30.5, 17), self.board.cells_height, True),
-                "full-screen": self.get_rect_by_text("full-screen", "white", (3.25, 17), self.board.cells_height, True)
+                "start": self.get_rect_by_text("Начать игру", "black", (16, 7), self.board.cells_height, True),
+                "maker": self.get_rect_by_text("Создатель уровней", "black", (16, 8.5), self.board.cells_height, True),
+                "load": self.get_rect_by_text("Загрузить уровень", "black", (16, 10), self.board.cells_height, True),
+                "info": self.get_rect_by_text("info", "black", (30.5, 17), self.board.cells_height, True),
+                "full-screen": self.get_rect_by_text("full-screen", "black", (3.25, 17), self.board.cells_height, True)
             }
         elif self.mode == "info":
             actions = {
-                "back": self.get_rect_by_text("Назад", "white", (16, 16), self.board.cells_height, True)
+                "back": self.get_rect_by_text("Назад", "black", (16, 16), self.board.cells_height, True)
             }
         elif self.mode == "creating1":
             actions = {
-                "next1": self.get_rect_by_text("Далее", "white", (16, 10), self.board.cells_height, True)
+                "next1": self.get_rect_by_text("Далее", "black", (16, 10), self.board.cells_height, True)
             }
         elif self.mode == "creating2":
             actions = {
-                "next2": self.get_rect_by_text("Далее", "white", (16, 10), self.board.cells_height, True)
+                "next2": self.get_rect_by_text("Далее", "black", (16, 10), self.board.cells_height, True)
             }
         elif self.mode == "load":
             actions = {
-                "next3": self.get_rect_by_text("Далее", "white", (16, 10), self.board.cells_height, True)
+                "next3": self.get_rect_by_text("Далее", "black", (16, 10), self.board.cells_height, True)
             }
         elif self.mode == "endgame":
             actions = {
-                "return": self.get_rect_by_text("Выйти", "white", (12, 9), self.board.cells_height, True),
-                "reset": self.get_rect_by_text("Сбросить", "white", (20, 9), self.board.cells_height, True)
+                "return": self.get_rect_by_text("Выйти", "black", (12, 9), self.board.cells_height, True),
+                "reset": self.get_rect_by_text("Сбросить", "black", (20, 9), self.board.cells_height, True)
             }
         for i in actions.keys():
             if actions[i].collidepoint(x, y):

@@ -45,7 +45,7 @@ class LevelLoader:
                 file.write(level_name.split("/")[-1])
 
     def draw(self):
-        self.screen.fill("black")
+        self.screen.fill("white")
         self.board.render(self.screen)
 
     def render(self, screen):

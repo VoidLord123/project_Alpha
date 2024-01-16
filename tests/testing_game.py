@@ -12,9 +12,6 @@ if __name__ == "__main__":
     font = pygame.font.Font("fonts/pixel_font2.ttf", 30)
     while game.running:
         game.update()
-        fps = clock.get_fps()
-        game.screen.blit(font.render(str(round(fps, 2)), 0, "white"), (10, 10))
-        pygame.display.flip()
         clock.tick(FPS)
 
     pygame.quit()

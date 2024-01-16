@@ -42,7 +42,7 @@ class Game:
         else:
             self.current_module.update()
         self.current_module.render(self.screen)
-        # pygame.display.flip()
+        pygame.display.flip()
 
     def change_to_mapmaker(self, level_name):
         self.current_module = MapMaker(self.screen.get_size(), level_name + ".alphamap")

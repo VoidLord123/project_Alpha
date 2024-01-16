@@ -14,6 +14,7 @@ class Cell:
         else:
             self.images = [pygame.surface.Surface((1, 1))]
             self.image = self.images[0]
+            self.image.fill("white")
         self.state = 0
 
     @staticmethod

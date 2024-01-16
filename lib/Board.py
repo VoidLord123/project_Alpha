@@ -102,7 +102,7 @@ class Board:
             for j in i:
                 screen.blit(j.get_image(self.cells_width, self.cells_height), self.get_cell_coord(x, y))
                 if self.debug_mode:
-                    pygame.draw.rect(screen, "white", (*self.get_cell_coord(x, y), self.cells_width,
+                    pygame.draw.rect(screen, "black", (*self.get_cell_coord(x, y), self.cells_width,
                                                        self.cells_height), 1)
 
                 x += 1

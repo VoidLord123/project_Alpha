@@ -1,0 +1,19 @@
+groups:
+    collide: BaseGroup
+    action: BaseGroup
+    player: BaseGroup
+sprites:
+    no-name: player
+        x: 2.2253521126760565
+        y: 5.0
+        vx: 0.1
+        vy: 0.1
+        state: 0
+        player
+    exit1: exit
+        x: 5.0
+        y: 3.0
+        vx: 0.0
+        vy: 0.0
+        state: 0
+        action

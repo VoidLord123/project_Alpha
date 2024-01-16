@@ -1,0 +1,82 @@
+groups:
+    player: BaseGroup
+    action: BaseGroup
+    collide: BaseGroup
+sprites:
+    no-name: player
+        x: 1.0
+        y: 8.0
+        vx: 0.1
+        vy: 0.1
+        state: 1
+        player
+    move1: move
+        x: 10.0
+        y: 17.0
+        vx: 0.0
+        vy: 0.0
+        state: 1
+        collide
+    move2: move
+        x: 10.0
+        y: 18.0
+        vx: 0.0
+        vy: 0.0
+        state: 1
+        collide
+    btn1: button
+        x: 18.0
+        y: 8.0
+        vx: 0.0
+        vy: 0.0
+        state: 0
+        action
+    btn2: button
+        x: 17.0
+        y: 8.0
+        vx: 0.0
+        vy: 0.0
+        state: 0
+        action
+    no-name: player
+        x: 1.0
+        y: 18.0
+        vx: 0.1
+        vy: 0.1
+        state: 0
+        player
+    no-name: kill
+        x: 5.0
+        y: 18.0
+        vx: 0.0
+        vy: 0.0
+        state: 0
+        action
+    no-name: kill
+        x: 6.0
+        y: 18.0
+        vx: 0.0
+        vy: 0.0
+        state: 0
+        action
+    exit1: exit
+        x: 18.0
+        y: 18.0
+        vx: 0.0
+        vy: 0.0
+        state: 0
+        action
+    no-name: kill
+        x: 15.0
+        y: 18.0
+        vx: 0.0
+        vy: 0.0
+        state: 0
+        action
+    no-name: kill
+        x: 14.0
+        y: 18.0
+        vx: 0.0
+        vy: 0.0
+        state: 0
+        action

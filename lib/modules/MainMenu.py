@@ -218,6 +218,7 @@ class MainMenu:
                                 "user_levels", self.level_name))
                     except Exception as e:
                         self.tick = 255
+                        print(e)
                         flag = False
 
                 elif i == "next3":
@@ -231,11 +232,12 @@ class MainMenu:
                     self.mode = "menu"
                 elif i == "reset":
                     with open("save", mode="w", encoding="utf-8") as file:
-                        file.write("test1")
+                        file.write("lvl1")
             if flag and flag2:
                 self.ok_click.play()
             elif flag2:
                 self.not_ok_click.play()
+
     def render(self, screen):
         self.draw()
         screen.blit(self.screen, (0, 0))

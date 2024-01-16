@@ -1,0 +1,5 @@
+preview_text: Some4
+exits:
+    exit1: main_levels/lvl10
+links:
+    btn1 -> move1

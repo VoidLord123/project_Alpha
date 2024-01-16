@@ -5,7 +5,7 @@ import pygame
 class Cell:
     is_collide = False
 
-    def __init__(self, states: list[str]):
+    def __init__(self, states=[]):
         #  Наследники Cell не должны иметь states в конструкторе
         self.states = states
         self.images = list(map(Cell.load_image, states))

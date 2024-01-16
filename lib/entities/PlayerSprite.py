@@ -10,7 +10,7 @@ TRANSFORM = 0.01
 
 
 class PlayerSprite(Sprite):
-    paths = ["img/test_yellow.png"]
+    paths = ["img/players/blue_player.png", "img/players/green_player.png"]
 
     def __init__(self, x, y, vx, vy, wc, hc,  *group, state=0, linked_levelboard=None):
 
@@ -69,7 +69,7 @@ class PlayerSprite(Sprite):
         if self.vy > MAX_GRAVITY_SPEED:
             self.vy = MAX_GRAVITY_SPEED
         self.rect.x += self.vx * self.wc * TRANSFORM
-        while self.check_collides():
+        while self.check_collides() and self.vx != 0:
             self.rect.x -= self.vx / abs(self.vx)
         self.rect.y += self.vy * self.hc * TRANSFORM
         while self.check_collides():

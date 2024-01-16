@@ -1,5 +1,5 @@
 import pygame
-from lib.Cell import Cell
+from lib.Cell import Cell, BaseCell
 
 
 class Board:
@@ -79,7 +79,7 @@ class Board:
         self.n = n
         self.m = m
         self.screen_size = screen_size
-        self.board = [[Cell([])] * n for _ in range(m)]
+        self.board = [[BaseCell()] * n for _ in range(m)]
         self.offset_vertical -= self.offset_y_sm
         self.offset_horizontal -= self.offset_x_sm
         self.cells_height = (self.screen_size[1] - 2 * self.offset_vertical) // n

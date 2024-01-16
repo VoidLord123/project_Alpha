@@ -44,7 +44,8 @@ class MapMaker:
             class_name = SPRITES[i].__name__
             self.blocks_dict.setdefault(i, [])
             self.blocks_dict[i].append((False, x + 28, y))
-            sprite = SPRITES[i]((x + 28) * self.main_board.cells_width, y * self.main_board.cells_height,
+            sprite = SPRITES[i]((x + 28) * self.main_board.cells_width + self.main_board.offset_horizontal,
+                                y * self.main_board.cells_height + self.main_board.offset_vertical,
                                 *BASIC_PARAMS[class_name], self.main_board.cells_width, self.main_board.cells_height,
                                 state=state)
             if class_name == "MovedSprite":
@@ -55,6 +56,8 @@ class MapMaker:
 
     def set_screen_size(self, screen_size):
         self.screen_size = screen_size
+        self.vertical_offset = 0
+        self.horizontal_offset = 0
         if round(screen_size[0] / screen_size[1], 2) != round(16 / 9, 2) and 16 / 9 <= \
                 screen_size[0] / screen_size[1]:
             self.horizontal_offset = screen_size[0] - round(self.screen_size[1] / 9 * 16)
@@ -67,7 +70,8 @@ class MapMaker:
             self.vertical_offset = 0
         self.screen = pygame.surface.Surface(screen_size)
 
-    def on_click(self, pos):
+    def on_click(self, x, y):
+        pos = x, y
         if self.main_board.get_cell(*pos):
             cx, cy = self.main_board.get_cell(*pos)
             changed_block = None
@@ -87,7 +91,8 @@ class MapMaker:
                         if changed_block[0] != i or (changed_block[0] == i and changed_block[1] != typee):
                             self.blocks_dict[i][typee] = (False, self.blocks_dict[i][typee][1],
                                                           self.blocks_dict[i][typee][2])
-        if self.chosen_block and self.inner_board.get_cell(*pos):
+        cell = self.inner_board.get_cell(*pos)
+        if self.chosen_block and self.inner_board.get_cell(*pos) and cell[0] < self.inner_board.n and cell[1] < self.inner_board.m:
             cx, cy = self.inner_board.get_cell(*pos)
             if len(self.chosen_block[0]) == 1:
                 find = self.inner_board.find_obj(cx, cy)
@@ -114,26 +119,26 @@ class MapMaker:
         self.screen.blit(text1, coord1)
 
     def draw(self):
-        self.screen.fill('black')
+        self.screen.fill('white')
         self.main_board.render(self.screen)
-        pygame.draw.rect(self.screen, "white", self.get_rect((1, 1), 4, 1), 2)
-        self.draw_text("Сохранить", "white", (1, 1), self.main_board.cells_height - 15)
-        self.draw_text("Блоки:", "White", (1, 5), self.main_board.cells_height - 15)
-        self.draw_text("Спрайты:", "White", (28, 2), self.main_board.cells_height - 15)
+        pygame.draw.rect(self.screen, "black", self.get_rect((1, 1), 4, 1), 2)
+        self.draw_text("Сохранить", "black", (1, 1), self.main_board.cells_height - 15)
+        self.draw_text("Блоки:", "black", (1, 5), self.main_board.cells_height - 15)
+        self.draw_text("Спрайты:", "black", (28, 2), self.main_board.cells_height - 15)
         x1 = 1
         y1 = 7
         for i in range(12):
-            pygame.draw.line(self.screen, "white", self.main_board.get_cell_coord(x1, y1 + i),
+            pygame.draw.line(self.screen, "black", self.main_board.get_cell_coord(x1, y1 + i),
                              self.main_board.get_cell_coord(x1 + 6, y1 + i))
         for i in range(7):
-            pygame.draw.line(self.screen, "white", self.main_board.get_cell_coord(x1 + i, y1),
+            pygame.draw.line(self.screen, "black", self.main_board.get_cell_coord(x1 + i, y1),
                              self.main_board.get_cell_coord(x1 + i, y1 + 10))
         x1, y1 = 28, 4
         for i in range(5):
-            pygame.draw.line(self.screen, "white", self.main_board.get_cell_coord(x1, y1 + i),
+            pygame.draw.line(self.screen, "black", self.main_board.get_cell_coord(x1, y1 + i),
                              self.main_board.get_cell_coord(x1 + 4, y1 + i))
         for i in range(5):
-            pygame.draw.line(self.screen, "white", self.main_board.get_cell_coord(x1 + i, y1),
+            pygame.draw.line(self.screen, "black", self.main_board.get_cell_coord(x1 + i, y1),
                              self.main_board.get_cell_coord(x1 + i, y1 + 4))
         self.inner_board.render(self.screen)
         self.sprite_group.draw(self.screen)
@@ -148,3 +153,6 @@ class MapMaker:
     def render(self, screen):
         self.draw()
         screen.blit(self.screen, (0, 0))
+
+    def update(self, *args):
+        pass

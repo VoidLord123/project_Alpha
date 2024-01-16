@@ -9,7 +9,7 @@ from lib.entities.ExitSprite import ExitSprite
 from lib.entities.KillSprite import KillSprite
 
 
-LINKS = {"W": TestWhite, "B": TestBlue, "N": BaseCell, "C": Cell}
+LINKS = {"W": TestWhite, "B": TestBlue, "N": BaseCell}
 
 SPRITES = {"tst": TestSprite1, "player": PlayerSprite, "exit": ExitSprite, "kill": KillSprite, "button": ButtonSprite,
            "move": MovedSprite}
@@ -17,7 +17,7 @@ SPRITES = {"tst": TestSprite1, "player": PlayerSprite, "exit": ExitSprite, "kill
 BASIC_PARAMS = {"PlayerSprite": (0.1, 0.1), "ExitSprite": (0, 0), "KillSprite": (0, 0),
                 "ButtonSprite": (0, 0), "MovedSprite": (0, 0)}
 
-BASIC_GROUPS = {"PlayerSprite": "player", "ExitSprite": "action", "KillSprite": "collide",
+BASIC_GROUPS = {"PlayerSprite": "player", "ExitSprite": "action", "KillSprite": "action",
                 "ButtonSprite": "action", "MovedSprite": "collide"}
 
 CLASS_NAME_TO_CLASS = {"PlayerSprite": PlayerSprite, "ExitSprite": ExitSprite, "KillSprite": KillSprite,

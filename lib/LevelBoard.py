@@ -137,8 +137,11 @@ class LevelBoard(Board):
             names = {}
             for i, j in names_items:
                 names[j] = i
-
+            n_of_exit = 1
             for i in self.all_sprites.sprites():
+                if names.get(i, 'no-name') == "no-name" and  spr_to_string[i.__class__] == "exit":
+                    names[i] = "exit" + str(n_of_exit)
+                    n_of_exit += 1
                 string += f"    {names.get(i, 'no-name')}: {spr_to_string[i.__class__]}\n"
                 string += f"        x: {self.get_cell_float(i.rect.x, i.rect.y)[0]}\n"
                 string += f"        y: {self.get_cell_float(i.rect.x, i.rect.y)[1]}\n"

@@ -84,6 +84,8 @@ class Board:
         self.offset_horizontal -= self.offset_x_sm
         self.cells_height = (self.screen_size[1] - 2 * self.offset_vertical) // n
         self.cells_width = (self.screen_size[0] - 2 * self.offset_horizontal) // m
+        self.cells_width, self.cells_height = (
+            min(self.cells_width, self.cells_height), min(self.cells_width, self.cells_height))
         self.offset_x_sm = 0
         self.offset_y_sm = 0
         if self.cells_width * n != self.screen_size[0]:
@@ -100,7 +102,7 @@ class Board:
             for j in i:
                 screen.blit(j.get_image(self.cells_width, self.cells_height), self.get_cell_coord(x, y))
                 if self.debug_mode:
-                    pygame.draw.rect(screen, "white", (*self.get_cell_coord(x, y), self.cells_width,
+                    pygame.draw.rect(screen, "black", (*self.get_cell_coord(x, y), self.cells_width,
                                                        self.cells_height), 1)
 
                 x += 1

@@ -15,7 +15,7 @@ class MainMenu:
         self.vertical_offset = 0
         self.set_screen_size(screen_size)
         self.board = Board(32, 18, screen_size, self.horizontal_offset, self.vertical_offset)
-        self.mode = "menu"
+        self.mode = "endgame"
         self.all_sprites = SpriteGroup()
         self.level_name = ""
         self.tick = 0
@@ -65,7 +65,7 @@ class MainMenu:
         dx, dy = round(self.board.cells_width * 0.1), round(self.board.cells_height * 0.1)
         image = pygame.surface.Surface((round(text1.get_width() + dx * 2), round(text1.get_height() + dy * 2)))
         pygame.draw.rect(image, color, (0, 0, image.get_width(), image.get_height()), 1 if dx // 4 == 0 else dx // 4)
-        image.blit(text1, (int(dx), round(dy)))
+        image.blit(text1, (round(dx), round(dy)))
         return image
 
     def update_tick(self):
@@ -110,6 +110,14 @@ class MainMenu:
             if self.tick > 0:
                 self.draw_text("Ошибка! Введена пустая строка или уровень не найден!", "red", (16, 12),
                                self.board.cells_height, alpha=self.tick)
+        elif self.mode == "endgame":
+            self.draw_text("Поздравляем! Вы сбежали из симуляции!", "white", (16, 3), self.board.cells_height * 1.5)
+            self.draw_text("Спасибо за прохождение!", "white", (16, 5), self.board.cells_height)
+            self.draw_text("Вы можете сбросить сохранение или сразу вернуться в главное меню", "white",
+                           (16, 7), self.board.cells_height)
+            self.draw_text("Выйти", "white", (12, 9), self.board.cells_height, True)
+            self.draw_text("Сбросить", "white", (20, 9), self.board.cells_height, True)
+
         self.all_sprites.draw(self.screen)
 
     def on_click(self, x, y):
@@ -138,7 +146,11 @@ class MainMenu:
             actions = {
                 "next3": self.get_rect_by_text("Далее", "white", (16, 10), self.board.cells_height, True)
             }
-
+        elif self.mode == "endgame":
+            actions = {
+                "return": self.get_rect_by_text("Выйти", "white", (12, 9), self.board.cells_height, True),
+                "reset": self.get_rect_by_text("Сбросить", "white", (20, 9), self.board.cells_height, True)
+            }
         for i in actions.keys():
             if actions[i].collidepoint(x, y):
                 if i == "start":
@@ -194,3 +206,7 @@ class MainMenu:
                         self.tick = 255
                     else:
                         pass
+                elif i == "return":
+                    self.mode = "menu"
+                elif i == "reset":
+                    print("reset")

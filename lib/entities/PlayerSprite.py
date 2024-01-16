@@ -12,6 +12,10 @@ TRANSFORM = 0.01
 class PlayerSprite(Sprite):
     paths = ["img/test_yellow.png"]
 
+    def __init__(self, x, y, vx, vy, wc, hc,  *group, state=0, linked_levelboard=None):
+
+        super().__init__(x, y, vx, vy, wc, hc,  *group, state=state, linked_levelboard=linked_levelboard)
+
     def check_collides(self):
         if self.linked_levelboard is not None:
             collide_list = self.linked_levelboard.get_collide_objects()

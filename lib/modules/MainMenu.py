@@ -20,6 +20,8 @@ class MainMenu:
         self.all_sprites = SpriteGroup()
         self.level_name = ""
         self.tick = 0
+        self.ok_click = pygame.mixer.Sound("sounds/ok_click.wav")
+        self.not_ok_click = pygame.mixer.Sound("sounds/not_ok_click.wav")
 
     def draw_text(self, text, color, coord, height, rect=False, alpha=255):
         text1 = self.get_text_image(text, color, height, rect)
@@ -157,8 +159,11 @@ class MainMenu:
                 "return": self.get_rect_by_text("Выйти", "black", (12, 9), self.board.cells_height, True),
                 "reset": self.get_rect_by_text("Сбросить", "black", (20, 9), self.board.cells_height, True)
             }
+        flag = True
+        flag2 = False
         for i in actions.keys():
             if actions[i].collidepoint(x, y):
+                flag2 = True
                 if i == "start":
                     self.linked_game.start_official_game()
                 elif i == "maker":
@@ -195,6 +200,7 @@ class MainMenu:
                                 "user_levels", self.all_sprites.sprites()[0].get_text()))
                     else:
                         self.tick = 255
+                        flag = False
                 elif i == "next2":
                     try:
                         n = int(self.all_sprites.sprites()[0].get_text())
@@ -212,12 +218,13 @@ class MainMenu:
                                 "user_levels", self.level_name))
                     except Exception as e:
                         self.tick = 255
-                        print(e)
+                        flag = False
 
                 elif i == "next3":
                     text = self.all_sprites.sprites()[0].get_text()
                     if not os.path.exists(os.path.join("user_levels", text + ".alphamap")) or text == "":
                         self.tick = 255
+                        flag = False
                     else:
                         self.linked_game.load_user_level(text)
                 elif i == "return":
@@ -225,7 +232,10 @@ class MainMenu:
                 elif i == "reset":
                     with open("save", mode="w", encoding="utf-8") as file:
                         file.write("test1")
-
+            if flag and flag2:
+                self.ok_click.play()
+            elif flag2:
+                self.not_ok_click.play()
     def render(self, screen):
         self.draw()
         screen.blit(self.screen, (0, 0))

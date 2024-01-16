@@ -6,11 +6,11 @@ from lib.Cell import Cell
 
 
 class TestWhite(Cell):
-    states = ["test_white.png", "test_white_st1.png"]
+    states = ["test_white_st1.png"]
     is_collide = True
 
     def __init__(self):
-        super().__init__(["test_white.png", "test_white_st1.png"])
+        super().__init__(["test_white_st1.png"])
 
 
 class TestBlue(Cell):

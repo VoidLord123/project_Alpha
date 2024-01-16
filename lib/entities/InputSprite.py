@@ -3,8 +3,9 @@ import pygame
 
 
 class InputSprite(Sprite):
-    def __init__(self, x, y, font: pygame.font.Font, max_len, border, *group, standard_symbol="A", color="white"):
-        super().__init__(x, y, 0, 0, *group)
+    def __init__(self, x, y, font: pygame.font.Font, max_len, border, *group, standard_symbol="A", height, color="white"):
+        super().__init__(x, y, 0, 0, 0, 0, *group)
+        self.height = height
         self.color = color
         self.standard_symbol = standard_symbol
         self.max_len = max_len
@@ -13,6 +14,7 @@ class InputSprite(Sprite):
         self.text = ""
         self.size = self.count_size()
         self.image = self.generate_image()
+        self.scale_to_height()
 
     def update(self, *args):
         text_prev = self.text
@@ -27,6 +29,7 @@ class InputSprite(Sprite):
 
         if text_prev != self.text:
             self.image = self.generate_image()
+            self.scale_to_height()
 
     def generate_image(self):
         text_image = self.font.render(self.text, 1, self.color)
@@ -47,3 +50,8 @@ class InputSprite(Sprite):
 
     def set_text(self, text):
         self.text = text
+
+    def scale_to_height(self):
+        new_image = pygame.transform.scale(self.image, (self.image.get_width() / self.image.get_height() * self.height,
+                                                        self.height))
+        self.image = new_image

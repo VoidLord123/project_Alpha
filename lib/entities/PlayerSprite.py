@@ -15,7 +15,6 @@ class PlayerSprite(Sprite):
     def __init__(self, x, y, vx, vy, wc, hc,  *group, state=0, linked_levelboard=None):
 
         super().__init__(x, y, vx, vy, wc, hc,  *group, state=state, linked_levelboard=linked_levelboard)
-        self.sound = pygame.mixer.Sound("sounds/fall.wav")
 
     def check_collides(self):
         if self.linked_levelboard is not None:
@@ -73,9 +72,5 @@ class PlayerSprite(Sprite):
         while self.check_collides():
             self.rect.x -= self.vx / abs(self.vx)
         self.rect.y += self.vy * self.hc * TRANSFORM
-        y_flag = False
         while self.check_collides():
-            y_flag = True
             self.rect.y -= self.vy / abs(self.vy)
-        if y_flag:
-            self.sound.play()

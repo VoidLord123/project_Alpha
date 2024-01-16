@@ -14,6 +14,9 @@ class Game:
         self.screen = pygame.display.set_mode(window_size)
         self.running = True
         self.esc_mode = False
+        pygame.mixer.music.load("sounds/music.wav")
+        pygame.mixer.music.set_volume(0.2)
+        pygame.mixer.music.play(-1)
 
     def toggle_fullscreen(self):
         if self.is_fullscreen:

@@ -62,5 +62,5 @@ class Game:
 
     def start_official_game(self):
         with open("save", mode="r", encoding="utf-8") as file:
-            self.current_module = LevelLoader(self.screen.get_size(), "main_levels/" +  file.read(), False, self)
+            self.current_module = LevelLoader(self.screen.get_size(), "main_levels/" + file.read(), False, self)
             self.state = "official_level"

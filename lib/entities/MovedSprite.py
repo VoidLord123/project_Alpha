@@ -41,3 +41,24 @@ class MovedSprite(Sprite):
                 self.vx = 0
             if f2:
                 self.vy = 0
+            if self.linked_levelboard is not None:
+                collide_sprites = self.linked_levelboard.get_player_sprites()
+                while pygame.sprite.spritecollideany(self, collide_sprites):
+                    for sprite in collide_sprites.sprites():
+                        if self.vx != 0:
+                            sprite.rect.x += self.vx
+                            if sprite.check_collides():
+                                sprite.rect.x -= self.vx
+                                self.rect.x -= self.vx
+                                self.vx = 0
+                        elif self.vy != 0:
+                            sprite.rect.y += self.vy
+                            if sprite.check_collides():
+                                sprite.rect.y -= self.vy
+                                self.rect.y -= self.vy
+                                self.vy = 0
+                for sprite in collide_sprites.sprites():
+                    if pygame.Rect(sprite.rect.x, sprite.rect.y + 1, sprite.wc, sprite.hc) .colliderect(self.rect):
+                        sprite.rect.x += self.vx
+                        if sprite.check_collides():
+                            sprite.rect.x -= self.vx

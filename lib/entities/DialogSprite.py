@@ -22,11 +22,11 @@ class DialogSprite(Sprite):
         temp_line = []
         for word in split_text:
             new_size = self.count_text_size(' '.join(temp_line + [word]))
-            if self.w >= new_size[0]:
-                temp_line.append(word)
-            else:
+            if self.w < new_size[0] or '\n' in word:
                 lines.append(' '.join(temp_line))
                 temp_line = [word]
+            elif self.w >= new_size[0]:
+                temp_line.append(word)
         if temp_line:
             lines.append(' '.join(temp_line))
         y_sep = self.count_text_size(lines[-1])[1]

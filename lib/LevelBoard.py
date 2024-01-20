@@ -27,6 +27,8 @@ class LevelBoard(Board):
         self.named_sprites = {}
         self.groups = {}
         self.all_sprites = SpriteGroup()
+        sprite = DialogSprite(10, 10, 100, 100, 'Hi iii ww aass asss assdd lflkfkj dkllkfdf sd sdsdsds', pygame.font.Font("fonts/pixel_font2.ttf"), 1)
+        self.all_sprites.add(sprite)
 
     def load(self, filename: str):
         with open(filename, encoding="utf-8", mode="r") as file:

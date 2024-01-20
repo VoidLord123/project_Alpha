@@ -3,7 +3,7 @@ import pygame
 
 
 class DialogSprite(Sprite):
-    def __init__(self, x, y, w, h, text, font: pygame.font.Font, border, *group, color="black"):
+    def __init__(self, x, y, w, h, text, font, max_len, border, *group, color="black"):
         super().__init__(x, y, 0, 0, 0, 0, *group)
         self.color = color
         self.font = font
@@ -13,6 +13,8 @@ class DialogSprite(Sprite):
         self.text = text
         self.size = (w, h)
         self.image = self.dialog()
+        self.change_image = False
+        self.scale_to_height()
 
     def dialog(self):
         lines = []
@@ -47,4 +49,18 @@ class DialogSprite(Sprite):
         return image.get_size()
 
     def update(self, *args):
-        self.image = self.dialog()
+        if self.change_image:
+            self.image = self.dialog()
+            self.scale_to_height()
+            self.change_image = False
+
+    def scale_to_height(self):
+        new_image = pygame.transform.scale(self.image, (self.image.get_width() / self.image.get_height() *
+                                                        self.h,
+                                                        self.h))
+        self.image = new_image
+        self.scale_to_height()
+
+    def set_text(self, text):
+        self.text = text
+        self.change_image = True

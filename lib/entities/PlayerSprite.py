@@ -13,7 +13,8 @@ class PlayerSprite(Sprite):
     paths = ["img/players/blue_player.png", "img/players/green_player.png"]
 
     def __init__(self, x, y, vx, vy, wc, hc,  *group, state=0, linked_levelboard=None):
-
+        self.extra_x_speed = 0
+        self.extra_y_speed = 0
         super().__init__(x, y, vx, vy, wc, hc,  *group, state=state, linked_levelboard=linked_levelboard)
 
     def check_collides(self):
@@ -27,6 +28,13 @@ class PlayerSprite(Sprite):
                 if pygame.sprite.collide_mask(self, i):
                     return True
         return False
+
+    def collide_with_move_sprite(self):
+        if self.linked_levelboard is not None:
+            collide_sprites = self.linked_levelboard
+            for i in collide_sprites.sprites():
+                if pygame.sprite.collide_mask(self, i):
+                    return True
 
     def update(self, *args):
         super().update(*args)
@@ -62,6 +70,7 @@ class PlayerSprite(Sprite):
         self.rect.x -= 1
         left_block = self.check_collides()
         self.rect.x += 1
+
         if left_block and self.vx < 0 or right_block and self.vx > 0:
             self.vx = 0
 

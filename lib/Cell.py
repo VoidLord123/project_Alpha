@@ -19,8 +19,8 @@ class Cell:
 
     @staticmethod
     def load_image(name):
-        fullname = os.path.join('img', name)
-        image = pygame.image.load(fullname)
+        filename = 'img' + '/' + name
+        image = pygame.image.load(filename)
         return image
 
     def get_image(self, cell_width, cell_height):

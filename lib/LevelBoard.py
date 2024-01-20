@@ -4,6 +4,7 @@ from lib.Cell import Cell
 from lib.constants import LINKS, SPRITES, GROUPS, BASIC_GROUPS, CLASS_NAME_TO_CLASS
 from lib.Board import Board
 from lib.SpriteGroup import SpriteGroup
+from lib.entities.DialogSprite import DialogSprite
 
 """
 Класс уровня. Имеет сохранения и загрузки в файлы .alphamap

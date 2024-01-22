@@ -75,5 +75,7 @@ class LevelLoader:
             i += 1
             while i < len(source) and source[i].startswith("$"):
                 source_name, link_name = source[i].split(" -> ")
-                self.board.named_sprites[source_name[1:]].link = link_name
+                if not self.board.named_sprites[source_name[1:]].link:
+                    self.board.named_sprites[source_name[1:]].link = []
+                self.board.named_sprites[source_name[1:]].link.append(link_name)
                 i += 1

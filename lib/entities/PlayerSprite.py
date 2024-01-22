@@ -2,10 +2,10 @@ import pygame
 from lib.Sprite import Sprite
 
 ACCELERATION_PLAYER_X = 0.2
-ACCELERATION_PLAYER_Y = 0.3
-MAX_VELOCITY_PLAYER_X = 10
+ACCELERATION_PLAYER_Y = 0.5
+MAX_VELOCITY_PLAYER_X = 7
 MAX_GRAVITY_SPEED = 10
-VELOCITY_PLAYER_JUMP = -15
+VELOCITY_PLAYER_JUMP = -20
 TRANSFORM = 0.01
 
 
@@ -75,8 +75,8 @@ class PlayerSprite(Sprite):
             self.vx = 0
 
         self.vy += ACCELERATION_PLAYER_Y
-        if self.vy > MAX_GRAVITY_SPEED:
-            self.vy = MAX_GRAVITY_SPEED
+        # if self.vy > MAX_GRAVITY_SPEED:
+        #     self.vy = MAX_GRAVITY_SPEED
         self.rect.x += self.vx * self.wc * TRANSFORM
         while self.check_collides() and self.vx != 0:
             self.rect.x -= self.vx / abs(self.vx)

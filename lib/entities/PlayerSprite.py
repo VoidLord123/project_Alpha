@@ -74,3 +74,4 @@ class PlayerSprite(Sprite):
         self.rect.y += self.vy * self.hc * TRANSFORM
         while self.check_collides():
             self.rect.y -= self.vy / abs(self.vy)
+

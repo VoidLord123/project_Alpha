@@ -13,7 +13,7 @@ if __name__ == "__main__":
     size = w, h = (1280, 720)
     screen = pygame.display.set_mode(size)
 
-    level_loader = LevelLoader(size, "test1")
+    level_loader = LevelLoader(size, "/lvl11")
     # mapmaker.main_board.debug_mode = True
     running = True
     clock = pygame.time.Clock()

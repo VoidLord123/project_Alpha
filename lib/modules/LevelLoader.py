@@ -79,3 +79,16 @@ class LevelLoader:
                     self.board.named_sprites[source_name[1:]].link = []
                 self.board.named_sprites[source_name[1:]].link.append(link_name)
                 i += 1
+            i += 1
+            if i < len(source) and source[i].startswith("$"):
+                self.board.dialogs.extend(list(map(lambda x: x[1:-1], source[i][2:-1].split(', '))))
+                self.board.start_dialog_sequence()
+                self.board.change_dialog()
+
+    def on_click(self, *pos):
+        x_measure = self.screen_size[0] // 10
+        y_sep = self.screen_size[0] // 100
+        y_measure = self.screen_size[1] // 10
+        if self.board.start_dialog and (x_measure * 3 <= pos[0] <= x_measure * 7 and
+                                        y_measure * 8 - y_sep <= pos[1] <= y_measure * 10 - y_sep):
+            self.board.change_dialog()

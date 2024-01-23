@@ -8,8 +8,10 @@ class DialogSprite(Sprite):
         self.color = color
         self.font = font
         self.border = border
-        self.w = w
-        self.h = h
+        self.w_sep = w // 100
+        self.h_sep = h // 100
+        self.w = w - self.w_sep * 2
+        self.h = h - self.h_sep * 2
         self.text = text
         self.size = (w, h)
         self.image = self.dialog()
@@ -22,9 +24,9 @@ class DialogSprite(Sprite):
         temp_line = []
         for word in split_text:
             new_size = self.count_text_size(' '.join(temp_line + [word]))
-            if self.w < new_size[0] or '\n' in word:
+            if self.w < new_size[0] or '\\n' in word:
                 lines.append(' '.join(temp_line))
-                temp_line = [word]
+                temp_line = [word.replace('\\n', '')]
             elif self.w >= new_size[0]:
                 temp_line.append(word)
         if temp_line:
@@ -36,10 +38,11 @@ class DialogSprite(Sprite):
         for line in lines:
             size = self.count_text_size(line)
             text_image = self.font.render(line, 1, 'black')
-            image.blit(text_image, (self.border * 2, yy + self.border * 2))
+            image.blit(text_image, (self.border * 2 + self.w_sep, yy + self.border * 2 + self.h_sep))
             yy += y_sep + 5
         if self.border > 0:
-            pygame.draw.rect(image, self.color, (0, 0, *self.size), self.border)
+            pygame.draw.rect(image, self.color,
+                             (0, 0, self.size[0] - self.w_sep * 2, self.size[1] - self.h_sep * 2), self.border)
         return image
 
     def count_text_size(self, text):
@@ -59,7 +62,6 @@ class DialogSprite(Sprite):
                                                         self.h,
                                                         self.h))
         self.image = new_image
-        self.scale_to_height()
 
     def set_text(self, text):
         self.text = text

@@ -27,8 +27,8 @@ class LevelBoard(Board):
         self.named_sprites = {}
         self.groups = {}
         self.all_sprites = SpriteGroup()
-        sprite = DialogSprite(10, 10, 100, 100, 'Hi iii ww aass asss assdd lflkfkj dkllkfdf sd sdsdsds', pygame.font.Font("fonts/pixel_font2.ttf"), 1)
-        self.all_sprites.add(sprite)
+        self.start_dialog = False
+        self.dialogs = []
 
     def load(self, filename: str):
         with open(filename, encoding="utf-8", mode="r") as file:
@@ -167,6 +167,26 @@ class LevelBoard(Board):
                                                  sprite.rect.y * self.cells_height + self.offset_vertical, sprite.vx,
                                                  sprite.vy, self.cells_width, self.cells_height, self.all_sprites,
                                                  self.groups[BASIC_GROUPS[class_name]], state=sprite.state)
+
+    def start_dialog_sequence(self):
+        self.cnt = -1
+        self.start_dialog = True
+
+    def change_dialog(self):
+        for sprite in self.all_sprites.sprites():
+            if sprite.__class__.__name__ == 'DialogSprite':
+                sprite.kill()
+        self.cnt += 1
+        if self.cnt == len(self.dialogs):
+            self.cnt = -1
+            self.start_dialog = False
+            return
+        x_measure = self.screen_size[0] // 10
+        y_sep = self.screen_size[1] // 100
+        y_measure = self.screen_size[1] // 10
+        sprite = DialogSprite(x_measure * 3, y_measure * 8 - y_sep, x_measure * 4, y_measure * 2 - y_sep,
+                              self.dialogs[self.cnt], pygame.font.Font("fonts/pixel_font2.ttf"), 40, 1,
+                              self.all_sprites)
 
     def find_obj(self, x, y):
         find = list(filter(lambda z: (x * self.cells_width + self.offset_horizontal,

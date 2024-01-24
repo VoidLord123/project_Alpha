@@ -4,4 +4,4 @@ exits:
 links:
     btn1 -> move1
 dialogs:
-    ["\n123", "234"]
+    ["123", "234"]

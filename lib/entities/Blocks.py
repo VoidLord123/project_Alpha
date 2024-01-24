@@ -23,3 +23,11 @@ class WhiteBlock(Cell):
 
     def __init__(self):
         super().__init__(["blocks/white_block.png"])
+
+
+class ReverseBlock(Cell):
+    is_collide = True
+    states = ["blocks/reverse_block.png"]
+
+    def __init__(self):
+        super().__init__(["blocks/reverse_block.png"])

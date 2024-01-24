@@ -6,6 +6,7 @@ class LevelLoader:
     board: LevelBoard
 
     def __init__(self, screen_size: tuple[int, int], first_level_name: str, user_level_mode=False, linked_game=None):
+        self.skipped_dialogs = []
         self.linked_game = linked_game
         self.user_level_mode = user_level_mode
         self.current_level_data = {}
@@ -14,6 +15,7 @@ class LevelLoader:
         self.screen_size = screen_size
         self.current_exits = {}
         self.current_level_name = first_level_name
+        self.skip_dialog = False
         self.load_level(first_level_name)
         self.past = first_level_name
         self.screen = pygame.surface.Surface(screen_size)
@@ -81,14 +83,12 @@ class LevelLoader:
                 i += 1
             i += 1
             if i < len(source) and source[i].startswith("$"):
-                self.board.dialogs.extend(list(map(lambda x: x[1:-1], source[i][2:-1].split(', '))))
-                self.board.start_dialog_sequence()
-                self.board.change_dialog()
+                new_dialogs = list(map(lambda x: x[1:-1], source[i][2:-1].split(', ')))
+                if new_dialogs not in self.skipped_dialogs:
+                    self.board.dialogs.extend(new_dialogs)
+                    self.board.start_dialog_sequence()
+                    self.board.change_dialog()
 
     def on_click(self, *pos):
-        x_measure = self.screen_size[0] // 10
-        y_sep = self.screen_size[0] // 100
-        y_measure = self.screen_size[1] // 10
-        if self.board.start_dialog and (x_measure * 3 <= pos[0] <= x_measure * 7 and
-                                        y_measure * 8 - y_sep <= pos[1] <= y_measure * 10 - y_sep):
+        if self.board.active_dialog:
             self.board.change_dialog()

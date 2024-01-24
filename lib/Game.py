@@ -31,7 +31,8 @@ class Game:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 self.running = False
-            if not self.esc_mode and event.type == pygame.MOUSEBUTTONDOWN and self.state in ["mapmaker", "menu"]:
+            if (not self.esc_mode and event.type == pygame.MOUSEBUTTONDOWN and
+                    self.state in ["mapmaker", "menu", "official_level", 'loader']):
                 self.current_module.on_click(*event.pos)
             if self.state == "menu":
                 self.current_module.update(event)

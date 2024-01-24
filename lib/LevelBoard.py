@@ -27,7 +27,7 @@ class LevelBoard(Board):
         self.named_sprites = {}
         self.groups = {}
         self.all_sprites = SpriteGroup()
-        self.start_dialog = False
+        self.active_dialog = True
         self.dialogs = []
 
     def load(self, filename: str):
@@ -169,8 +169,8 @@ class LevelBoard(Board):
                                                  self.groups[BASIC_GROUPS[class_name]], state=sprite.state)
 
     def start_dialog_sequence(self):
+        self.active_dialog = True
         self.cnt = -1
-        self.start_dialog = True
 
     def change_dialog(self):
         for sprite in self.all_sprites.sprites():
@@ -179,13 +179,15 @@ class LevelBoard(Board):
         self.cnt += 1
         if self.cnt == len(self.dialogs):
             self.cnt = -1
-            self.start_dialog = False
+            self.active_dialog = False
+            self.linked_loader.skipped_dialogs.append(self.dialogs)
             return
         x_measure = self.screen_size[0] // 10
         y_sep = self.screen_size[1] // 100
         y_measure = self.screen_size[1] // 10
         sprite = DialogSprite(x_measure * 3, y_measure * 8 - y_sep, x_measure * 4, y_measure * 2 - y_sep,
-                              self.dialogs[self.cnt], pygame.font.Font("fonts/pixel_font2.ttf"), 40, 1,
+                              self.dialogs[self.cnt],
+                              pygame.font.Font("fonts/pixel_font2.ttf", self.cells_height // 3), 40, 1,
                               self.all_sprites)
 
     def find_obj(self, x, y):
@@ -208,6 +210,21 @@ class LevelBoard(Board):
             y += 1
 
         return collide_list
+
+    def get_reverse_objects(self):
+        block_list = []
+        y = 0
+        for i in self.board:
+            x = 0
+            for j in i:
+                if j.__class__.__name__ == 'ReverseBlock':
+                    a = j.get_image(self.cells_width, self.cells_height).get_rect()
+                    a.x, a.y = self.get_cell_coord(x, y)
+                    block_list.append(a)
+                x += 1
+            y += 1
+
+        return block_list
 
     def get_collide_sprites(self):
         sprites = self.groups.get("collide", None)

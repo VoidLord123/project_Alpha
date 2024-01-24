@@ -6,6 +6,7 @@ class LevelLoader:
     board: LevelBoard
 
     def __init__(self, screen_size: tuple[int, int], first_level_name: str, user_level_mode=False, linked_game=None):
+        self.skipped_dialogs = []
         self.linked_game = linked_game
         self.user_level_mode = user_level_mode
         self.current_level_data = {}
@@ -14,6 +15,7 @@ class LevelLoader:
         self.screen_size = screen_size
         self.current_exits = {}
         self.current_level_name = first_level_name
+        self.skip_dialog = False
         self.load_level(first_level_name)
         self.past = first_level_name
         self.screen = pygame.surface.Surface(screen_size)
@@ -72,10 +74,24 @@ class LevelLoader:
                 exit_name, name = source[i].split(": ")
                 self.current_exits[exit_name[1:]] = name
                 i += 1
+            links_load = source[i] == "links:"
             i += 1
-            while i < len(source) and source[i].startswith("$"):
-                source_name, link_name = source[i].split(" -> ")
-                if not self.board.named_sprites[source_name[1:]].link:
-                    self.board.named_sprites[source_name[1:]].link = []
-                self.board.named_sprites[source_name[1:]].link.append(link_name)
-                i += 1
+            if links_load:
+                while i < len(source) and source[i].startswith("$"):
+                    source_name, link_name = source[i].split(" -> ")
+                    if not self.board.named_sprites[source_name[1:]].link:
+                        self.board.named_sprites[source_name[1:]].link = []
+                    self.board.named_sprites[source_name[1:]].link.append(link_name)
+                    i += 1
+            dialogs_load = source[i] == "dialogs:"
+            i += 1
+            if i < len(source) and source[i].startswith("$") and dialogs_load:
+                new_dialogs = list(map(lambda x: x.replace("\n", "\\n"), eval(source[i][1:])))
+                if new_dialogs not in self.skipped_dialogs:
+                    self.board.dialogs.extend(new_dialogs)
+                    self.board.start_dialog_sequence()
+                    self.board.change_dialog()
+
+    def on_click(self, *pos):
+        if self.board.active_dialog:
+            self.board.change_dialog()

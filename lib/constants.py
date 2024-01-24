@@ -9,7 +9,7 @@ from lib.entities.ExitSprite import ExitSprite
 from lib.entities.KillSprite import KillSprite
 
 
-LINKS = {"G": GrayBlock, "B": BlueBlock, "W": WhiteBlock, "N": BaseCell}
+LINKS = {"G": GrayBlock, "B": BlueBlock, "W": WhiteBlock, "N": BaseCell, "R": ReverseBlock}
 
 SPRITES = {"tst": TestSprite1, "player": PlayerSprite, "exit": ExitSprite, "kill": KillSprite, "button": ButtonSprite,
            "move": MovedSprite}

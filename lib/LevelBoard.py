@@ -27,8 +27,9 @@ class LevelBoard(Board):
         self.named_sprites = {}
         self.groups = {}
         self.all_sprites = SpriteGroup()
-        sprite = DialogSprite(10, 10, 100, 100, 'Hi iii ww aass asss assdd lflkfkj dkllkfdf sd sdsdsds', pygame.font.Font("fonts/pixel_font2.ttf"), 1)
-        self.all_sprites.add(sprite)
+        self.always_update_group = SpriteGroup()
+        self.active_dialog = False
+        self.dialogs = []
 
     def load(self, filename: str):
         with open(filename, encoding="utf-8", mode="r") as file:
@@ -168,6 +169,28 @@ class LevelBoard(Board):
                                                  sprite.vy, self.cells_width, self.cells_height, self.all_sprites,
                                                  self.groups[BASIC_GROUPS[class_name]], state=sprite.state)
 
+    def start_dialog_sequence(self):
+        self.active_dialog = True
+        self.cnt = -1
+
+    def change_dialog(self):
+        for sprite in self.always_update_group.sprites():
+            if sprite.__class__.__name__ == 'DialogSprite':
+                sprite.kill()
+        self.cnt += 1
+        if self.cnt == len(self.dialogs):
+            self.cnt = -1
+            self.active_dialog = False
+            self.linked_loader.skipped_dialogs.append(self.dialogs)
+            return
+        x_measure = self.screen_size[0] // 10
+        y_sep = self.screen_size[1] // 100
+        y_measure = self.screen_size[1] // 10
+        sprite = DialogSprite(x_measure * 2, y_measure * 8 - y_sep, x_measure * 6, y_measure * 2 - y_sep,
+                              self.dialogs[self.cnt],
+                              pygame.font.Font("fonts/pixel_font2.ttf", self.cells_height // 4), 40, 1,
+                              self.always_update_group)
+
     def find_obj(self, x, y):
         find = list(filter(lambda z: (x * self.cells_width + self.offset_horizontal,
                                       y * self.cells_height + self.offset_vertical) == (z.rect.x, z.rect.y),
@@ -189,6 +212,21 @@ class LevelBoard(Board):
 
         return collide_list
 
+    def get_reverse_objects(self):
+        block_list = []
+        y = 0
+        for i in self.board:
+            x = 0
+            for j in i:
+                if j.__class__.__name__ == 'ReverseBlock':
+                    a = j.get_image(self.cells_width, self.cells_height).get_rect()
+                    a.x, a.y = self.get_cell_coord(x, y)
+                    block_list.append(a)
+                x += 1
+            y += 1
+
+        return block_list
+
     def get_collide_sprites(self):
         sprites = self.groups.get("collide", None)
         if sprites is not None:
@@ -207,6 +245,9 @@ class LevelBoard(Board):
     def render(self, screen):
         super().render(screen)
         self.all_sprites.draw(screen)
+        self.always_update_group.draw(screen)
 
     def update(self, *args):
-        self.all_sprites.update(*args)
+        if not self.active_dialog:
+            self.all_sprites.update(*args)
+        self.always_update_group.update(*args)

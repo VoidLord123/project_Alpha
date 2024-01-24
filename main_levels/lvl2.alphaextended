@@ -1,3 +1,7 @@
 preview_text: Some4
 exits:
-    exit1: main_levels/lvl3
+    exit1: main_levels/lvl1
+links:
+    btn1 -> m1
+dialogs:
+    ["test", "test4"]

@@ -17,72 +17,79 @@ sprites:
         vy: 0.0
         state: 0
         collide
-    exit1: green_exit
-        x: 9.0
-        y: 0.0
-        vx: 0.0
-        vy: 0.0
-        state: 0
-        action
-    exit2: green_exit
-        x: 8.0
-        y: 0.0
-        vx: 0.0
-        vy: 0.0
-        state: 0
-        action
-    exit3: green_exit
-        x: 7.0
-        y: 0.0
-        vx: 0.0
-        vy: 0.0
-        state: 0
-        action
-    exit4: green_exit
-        x: 6.0
-        y: 0.0
-        vx: 0.0
-        vy: 0.0
-        state: 0
-        action
-    exit5: green_exit
-        x: 5.0
-        y: 0.0
-        vx: 0.0
-        vy: 0.0
-        state: 0
-        action
-    exit6: green_exit
-        x: 4.0
-        y: 0.0
-        vx: 0.0
-        vy: 0.0
-        state: 0
-        action
-    exit7: green_exit
-        x: 3.0
-        y: 0.0
-        vx: 0.0
-        vy: 0.0
-        state: 0
-        action
-    exit8: green_exit
-        x: 2.0
-        y: 0.0
-        vx: 0.0
-        vy: 0.0
-        state: 0
-        action
-    exit9: green_exit
-        x: 1.0
-        y: 0.0
-        vx: 0.0
-        vy: 0.0
-        state: 0
-        action
     btn1: button
         x: 6.0
         y: 4.0
+        vx: 0.0
+        vy: 0.0
+        state: 0
+        action
+    exit1: exit
+        x: 9.0
+        y: 1.0
+        vx: 0.0
+        vy: 0.0
+        state: 0
+        action
+    no-name: kill
+        x: 9.0
+        y: 9.0
+        vx: 0
+        vy: 0
+        state: 0
+        action
+    no-name: kill
+        x: 7.0
+        y: 9.0
+        vx: 0
+        vy: 0
+        state: 0
+        action
+    no-name: kill
+        x: 8.0
+        y: 9.0
+        vx: 0
+        vy: 0
+        state: 0
+        action
+    no-name: kill
+        x: 6.0
+        y: 9.0
+        vx: 0
+        vy: 0
+        state: 0
+        action
+    no-name: kill
+        x: 5.0
+        y: 9.0
+        vx: 0
+        vy: 0
+        state: 0
+        action
+    no-name: kill
+        x: 4.0
+        y: 9.0
+        vx: 0
+        vy: 0
+        state: 0
+        action
+    no-name: kill
+        x: 3.0
+        y: 9.0
+        vx: 0
+        vy: 0
+        state: 0
+        action
+    no-name: kill
+        x: 2.0
+        y: 9.0
+        vx: 0
+        vy: 0
+        state: 0
+        action
+    no-name: kill
+        x: 1.0
+        y: 9.0
         vx: 0
         vy: 0
         state: 0

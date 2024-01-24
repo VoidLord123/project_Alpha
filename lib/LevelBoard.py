@@ -5,6 +5,7 @@ from lib.constants import LINKS, SPRITES, GROUPS, BASIC_GROUPS, CLASS_NAME_TO_CL
 from lib.Board import Board
 from lib.SpriteGroup import SpriteGroup
 from lib.entities.DialogSprite import DialogSprite
+from lib.AnimatedSprite import AnimatedSprite
 
 """
 Класс уровня. Имеет сохранения и загрузки в файлы .alphamap
@@ -28,6 +29,7 @@ class LevelBoard(Board):
         self.groups = {}
         self.all_sprites = SpriteGroup()
         self.always_update_group = SpriteGroup()
+        self.animation_group = SpriteGroup()
         self.active_dialog = False
         self.dialogs = []
 
@@ -61,7 +63,7 @@ class LevelBoard(Board):
             file.writelines(map_str)
 
     def load_sprites(self, filename):
-        with open(filename, mode='r', encoding="utf-8") as file:
+        with (open(filename, mode='r', encoding="utf-8") as file):
             info = file.readlines()
             info = list(map(lambda x1: x1.strip("\n").replace("    ", "$").replace("\t", "$"), info))
             info = info[1:]
@@ -102,13 +104,17 @@ class LevelBoard(Board):
                     item = info[i]
                     groups.append(self.groups[item[2:]])
                     i += 1
+
                 if name == "no-name":
-                    sprite_type(x, y, vx, vy, self.cells_width, self.cells_height, *groups, state=state,
-                                linked_levelboard=self)
+                    sprite = sprite_type(x, y, vx, vy, self.cells_width, self.cells_height, *groups, state=state,
+                                         linked_levelboard=self)
                 else:
-                    self.named_sprites[name] = sprite_type(x, y, vx, vy, self.cells_width, self.cells_height,
-                                                           *groups, state=state, linked_levelboard=self)
+                    sprite = sprite_type(x, y, vx, vy, self.cells_width, self.cells_height,
+                                         *groups, state=state, linked_levelboard=self)
+                    self.named_sprites[name] = sprite
                     self.named_sprites[name].name = name  # name, name, name, name. Нужно для некоторых возможностей.
+                if isinstance(sprite, AnimatedSprite):
+                    self.animation_group.add(sprite)
 
     def get_cell_float(self, x, y):
         x_new, y_new = x - self.offset_horizontal, y - self.offset_vertical
@@ -250,4 +256,6 @@ class LevelBoard(Board):
     def update(self, *args):
         if not self.active_dialog:
             self.all_sprites.update(*args)
+        else:
+            self.animation_group.update()
         self.always_update_group.update(*args)

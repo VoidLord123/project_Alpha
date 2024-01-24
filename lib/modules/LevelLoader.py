@@ -74,7 +74,8 @@ class LevelLoader:
                 exit_name, name = source[i].split(": ")
                 self.current_exits[exit_name[1:]] = name
                 i += 1
-            links_load = source[i] == "links:"
+            if i < len(source):
+                links_load = source[i] == "links:"
             i += 1
             if links_load:
                 while i < len(source) and source[i].startswith("$"):
@@ -83,7 +84,8 @@ class LevelLoader:
                         self.board.named_sprites[source_name[1:]].link = []
                     self.board.named_sprites[source_name[1:]].link.append(link_name)
                     i += 1
-            dialogs_load = source[i] == "dialogs:"
+            if i < len(source):
+                dialogs_load = source[i] == "dialogs:"
             i += 1
             if i < len(source) and source[i].startswith("$") and dialogs_load:
                 new_dialogs = list(map(lambda x: x.replace("\n", "\\n"), eval(source[i][1:])))

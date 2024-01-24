@@ -76,8 +76,9 @@ class LevelLoader:
                 i += 1
             if i < len(source):
                 links_load = source[i] == "links:"
-            i += 1
+
             if links_load:
+                i += 1
                 while i < len(source) and source[i].startswith("$"):
                     source_name, link_name = source[i].split(" -> ")
                     if not self.board.named_sprites[source_name[1:]].link:
@@ -86,7 +87,8 @@ class LevelLoader:
                     i += 1
             if i < len(source):
                 dialogs_load = source[i] == "dialogs:"
-            i += 1
+            if dialogs_load:
+                i += 1
             if i < len(source) and source[i].startswith("$") and dialogs_load:
                 new_dialogs = list(map(lambda x: x.replace("\n", "\\n"), eval(source[i][1:])))
                 if new_dialogs not in self.skipped_dialogs:

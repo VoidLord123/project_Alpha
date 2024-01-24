@@ -27,7 +27,8 @@ class LevelBoard(Board):
         self.named_sprites = {}
         self.groups = {}
         self.all_sprites = SpriteGroup()
-        self.active_dialog = True
+        self.always_update_group = SpriteGroup()
+        self.active_dialog = False
         self.dialogs = []
 
     def load(self, filename: str):
@@ -173,7 +174,7 @@ class LevelBoard(Board):
         self.cnt = -1
 
     def change_dialog(self):
-        for sprite in self.all_sprites.sprites():
+        for sprite in self.always_update_group.sprites():
             if sprite.__class__.__name__ == 'DialogSprite':
                 sprite.kill()
         self.cnt += 1
@@ -185,10 +186,10 @@ class LevelBoard(Board):
         x_measure = self.screen_size[0] // 10
         y_sep = self.screen_size[1] // 100
         y_measure = self.screen_size[1] // 10
-        sprite = DialogSprite(x_measure * 3, y_measure * 8 - y_sep, x_measure * 4, y_measure * 2 - y_sep,
+        sprite = DialogSprite(x_measure * 2, y_measure * 8 - y_sep, x_measure * 6, y_measure * 2 - y_sep,
                               self.dialogs[self.cnt],
-                              pygame.font.Font("fonts/pixel_font2.ttf", self.cells_height // 3), 40, 1,
-                              self.all_sprites)
+                              pygame.font.Font("fonts/pixel_font2.ttf", self.cells_height // 4), 40, 1,
+                              self.always_update_group)
 
     def find_obj(self, x, y):
         find = list(filter(lambda z: (x * self.cells_width + self.offset_horizontal,
@@ -244,6 +245,9 @@ class LevelBoard(Board):
     def render(self, screen):
         super().render(screen)
         self.all_sprites.draw(screen)
+        self.always_update_group.draw(screen)
 
     def update(self, *args):
-        self.all_sprites.update(*args)
+        if not self.active_dialog:
+            self.all_sprites.update(*args)
+        self.always_update_group.update(*args)

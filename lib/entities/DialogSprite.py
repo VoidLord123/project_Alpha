@@ -24,9 +24,14 @@ class DialogSprite(Sprite):
         temp_line = []
         for word in split_text:
             new_size = self.count_text_size(' '.join(temp_line + [word]))
-            if self.w < new_size[0] or '\\n' in word:
+            if self.w < new_size[0] or word.endswith('\\n'):
+                if word.endswith('\\n'):
+                    temp_line.append(word.replace('\\n', ''))
                 lines.append(' '.join(temp_line))
-                temp_line = [word.replace('\\n', '')]
+                if word.endswith('\\n'):
+                    temp_line = []
+                else:
+                    temp_line = [word]
             elif self.w >= new_size[0]:
                 temp_line.append(word)
         if temp_line:
@@ -48,7 +53,7 @@ class DialogSprite(Sprite):
     def count_text_size(self, text):
         image = self.font.render(text, 1, 'black')
         if self.border > 0:
-            return image.get_width() + 4 * self.border, image.get_height() + self.border * 4
+            return image.get_width() + self.border * 8, image.get_height() + self.border * 8
         return image.get_size()
 
     def update(self, *args):

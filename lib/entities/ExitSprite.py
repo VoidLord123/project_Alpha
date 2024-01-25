@@ -38,3 +38,11 @@ class CoreExit(ExitSprite):
     paths = [f"img\\core\\sprite_{i:02}.png" for i in range(0, 20)]
     cell_height = 2
     cell_width = 2
+
+
+class TheTrueExitRed(TheTrueExit):
+    paths = [f"img\\red_true_portal\\sprite_{i}.png" for i in range(0, 8)]
+
+
+class RedExitSprite(GreenExitSprite):
+    paths = [f"img\\red_portal\\sprite_{i:02}.png" for i in range(0, 18)]

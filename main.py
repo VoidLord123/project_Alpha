@@ -13,5 +13,6 @@ if __name__ == "__main__":
     clock = pygame.time.Clock()
     while game.running:
         game.update()
+        print(clock.get_fps())
         clock.tick(FPS)
     pygame.quit()

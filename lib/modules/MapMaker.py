@@ -53,6 +53,7 @@ class MapMaker:
             self.main_board.board[y][x + 28] = BaseCell()
             self.sprite_group.add(sprite)
         self.items = self.blocks + self.sprites
+        self.ok_click = pygame.mixer.Sound("sounds/ok_click.wav")
 
     def set_screen_size(self, screen_size):
         self.screen_size = screen_size
@@ -78,11 +79,13 @@ class MapMaker:
             for i in self.items:
                 for typee in range(len(self.blocks_dict[i])):
                     if self.blocks_dict[i][typee][1] == cx and self.blocks_dict[i][typee][2] == cy:
+                        self.ok_click.play()
                         self.blocks_dict[i][typee] = (True, cx, cy)
                         changed_block = [i, typee]
                         self.chosen_block = [i, typee]
                         break
             if (cx, cy) in [(1, 1), (2, 1), (3, 1), (4, 1)]:
+                self.ok_click.play()
                 self.inner_board.save(self.filename)
                 self.inner_board.save_sprites(self.filename.split('.')[0] + '.alphaspm')
             if changed_block:
@@ -92,7 +95,9 @@ class MapMaker:
                             self.blocks_dict[i][typee] = (False, self.blocks_dict[i][typee][1],
                                                           self.blocks_dict[i][typee][2])
         cell = self.inner_board.get_cell(*pos)
-        if self.chosen_block and self.inner_board.get_cell(*pos) and cell[0] < self.inner_board.n and cell[1] < self.inner_board.m:
+        if (self.chosen_block and self.inner_board.get_cell(*pos) and
+                cell[0] < self.inner_board.n and cell[1] < self.inner_board.m):
+            self.ok_click.play()
             cx, cy = self.inner_board.get_cell(*pos)
             if len(self.chosen_block[0]) == 1:
                 find = self.inner_board.find_obj(cx, cy)

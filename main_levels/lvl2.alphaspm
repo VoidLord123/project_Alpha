@@ -38,3 +38,17 @@ sprites:
         vy: 0.1
         state: 0
         player
+    btn1: button
+        x: 6.0
+        y: 4.0
+        vx: 0
+        vy: 0
+        state: 0
+        action
+    m1: move
+        x: 7.0
+        y: 8.0
+        vx: 0
+        vy: 0
+        state: 0
+        collide

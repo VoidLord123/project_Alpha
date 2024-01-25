@@ -31,10 +31,11 @@ class PlayerSprite(Sprite):
 
     def collide_with_move_sprite(self):
         if self.linked_levelboard is not None:
-            collide_sprites = self.linked_levelboard
+            collide_sprites = self.linked_levelboard.get_collide_sprites()
             for i in collide_sprites.sprites():
                 if pygame.sprite.collide_mask(self, i):
                     return True
+        return False
 
     def update(self, *args):
         super().update(*args)
@@ -53,9 +54,9 @@ class PlayerSprite(Sprite):
         on_block = self.check_collides()
         self.rect.y -= 1
 
-        self.rect.y -= 1
+        self.rect.y -= 2
         under_block = self.check_collides()
-        self.rect.y += 1
+        self.rect.y += 2
         if on_block:
             self.vy = 0
         if keys[pygame.K_UP] and not self.check_collides() and on_block:
@@ -75,8 +76,8 @@ class PlayerSprite(Sprite):
             self.vx = 0
 
         self.vy += ACCELERATION_PLAYER_Y
-        # if self.vy > MAX_GRAVITY_SPEED:
-        #     self.vy = MAX_GRAVITY_SPEED
+        if self.vy > MAX_GRAVITY_SPEED:
+            self.vy = MAX_GRAVITY_SPEED
         self.rect.x += self.vx * self.wc * TRANSFORM
         while self.check_collides() and self.vx != 0:
             self.rect.x -= self.vx / abs(self.vx)

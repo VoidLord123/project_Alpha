@@ -21,3 +21,7 @@ class ExitSprite(AnimatedSprite):
                 if pygame.sprite.collide_mask(self, i):
                     self.action()
                     break
+
+
+class GreenExitSprite(ExitSprite):
+    paths = [f"img\\green_portal\\sprite_{i:02}.png" for i in range(0, 18)]

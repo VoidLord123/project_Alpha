@@ -149,7 +149,8 @@ class LevelBoard(Board):
                 names[j] = i
             n_of_exit = 1
             for i in self.all_sprites.sprites():
-                if names.get(i, 'no-name') == "no-name" and spr_to_string[i.__class__] in ["exit", "green_exit"]:
+                exits_name = ["exit", "green_exit", "true_exit", "core       "]
+                if names.get(i, 'no-name') == "no-name" and spr_to_string[i.__class__] in exits_name:
                     names[i] = "exit" + str(n_of_exit)
                     n_of_exit += 1
                 string += f"    {names.get(i, 'no-name')}: {spr_to_string[i.__class__]}\n"

@@ -1,8 +1,16 @@
-size: 12; 7
-G;G;G;G;G;G;G;G;G;G;G;G
-W;N;N;B;N;N;N;B;N;N;N;N
-W;N;N;B;N;N;N;B;N;N;N;N
-W;N;N;N;N;N;N;N;N;N;N;B
-W;N;N;N;N;B;N;N;N;N;N;B
-W;N;N;N;N;B;N;N;N;B;N;B
-G;G;G;G;G;G;G;G;G;G;G;G
+size: 15; 15
+G;G;G;G;G;G;G;G;G;G;G;G;G;G;G
+W;N;N;N;N;N;N;N;N;N;N;N;G;G;G
+W;N;N;N;N;N;N;N;N;N;N;N;G;G;G
+W;N;N;N;N;N;N;N;N;N;N;N;G;G;G
+W;N;N;N;N;N;N;N;N;N;N;N;G;G;G
+W;N;N;B;B;N;N;B;B;N;N;B;G;G;G
+W;B;B;N;N;B;B;N;N;B;B;N;G;G;G
+G;G;G;G;G;G;G;G;G;G;G;G;G;G;G
+G;G;G;G;G;G;G;G;G;G;G;G;G;G;G
+G;G;G;G;G;G;G;G;G;G;G;G;G;G;G
+G;G;G;G;G;G;G;G;G;G;G;G;G;G;G
+G;G;G;G;G;G;G;G;G;G;G;G;G;G;G
+G;G;G;G;G;G;G;G;G;G;G;G;G;G;G
+G;G;G;G;G;G;G;G;G;G;G;G;G;G;G
+G;G;G;G;G;G;G;G;G;G;G;G;G;G;G

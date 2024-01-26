@@ -3,6 +3,7 @@ import pygame
 from lib.modules.LevelLoader import LevelLoader
 from lib.modules.MainMenu import MainMenu
 from lib.modules.MapMaker import MapMaker
+from lib.constants import FPS
 
 
 class Game:
@@ -14,6 +15,9 @@ class Game:
         self.screen = pygame.display.set_mode(window_size)
         self.running = True
         self.esc_mode = False
+        self.clock = pygame.time.Clock()
+        self.show_fps = True
+        self.fps_font = pygame.font.Font("fonts/pixel_font2.ttf", 20)
         pygame.mixer.music.load("sounds/music.wav")
         pygame.mixer.music.set_volume(0.2)
         pygame.mixer.music.play(-1)
@@ -46,7 +50,10 @@ class Game:
         else:
             self.current_module.update()
         self.current_module.render(self.screen)
+        if self.show_fps:
+            self.screen.blit(self.fps_font.render(str(self.clock.get_fps()), 1, "black"), (20, 20))
         pygame.display.flip()
+        self.clock.tick(FPS)
 
     def change_to_mapmaker(self, level_name):
         self.current_module = MapMaker(self.screen.get_size(), level_name + ".alphamap")

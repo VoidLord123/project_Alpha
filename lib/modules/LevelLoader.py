@@ -66,6 +66,8 @@ class LevelLoader:
             self.linked_game.change_to_menu("endgame")
 
     def load_extended(self, filename: str):
+        links_load = False
+        dialogs_load = False
         with open(filename, encoding="utf-8", mode="r") as file:
             source = list(map(lambda x:  x.strip("\n").replace("    ", "$").replace("\t", "$"), file.readlines()))
             self.current_level_data["preview_text"] = source[0].split(": ")[1]

@@ -24,72 +24,72 @@ sprites:
         vy: 0.0
         state: 0
         action
-    exit1: exit
+    no-name: kill
         x: 9.0
-        y: 1.0
+        y: 9.0
         vx: 0.0
         vy: 0.0
         state: 0
         action
     no-name: kill
-        x: 9.0
-        y: 9.0
-        vx: 0
-        vy: 0
-        state: 0
-        action
-    no-name: kill
         x: 7.0
         y: 9.0
-        vx: 0
-        vy: 0
+        vx: 0.0
+        vy: 0.0
         state: 0
         action
     no-name: kill
         x: 8.0
         y: 9.0
-        vx: 0
-        vy: 0
+        vx: 0.0
+        vy: 0.0
         state: 0
         action
     no-name: kill
         x: 6.0
         y: 9.0
-        vx: 0
-        vy: 0
+        vx: 0.0
+        vy: 0.0
         state: 0
         action
     no-name: kill
         x: 5.0
         y: 9.0
-        vx: 0
-        vy: 0
+        vx: 0.0
+        vy: 0.0
         state: 0
         action
     no-name: kill
         x: 4.0
         y: 9.0
-        vx: 0
-        vy: 0
+        vx: 0.0
+        vy: 0.0
         state: 0
         action
     no-name: kill
         x: 3.0
         y: 9.0
-        vx: 0
-        vy: 0
+        vx: 0.0
+        vy: 0.0
         state: 0
         action
     no-name: kill
         x: 2.0
         y: 9.0
-        vx: 0
-        vy: 0
+        vx: 0.0
+        vy: 0.0
         state: 0
         action
     no-name: kill
         x: 1.0
         y: 9.0
+        vx: 0.0
+        vy: 0.0
+        state: 0
+        action
+    no-name: red_true_exit
+        x: 8.0
+        y: 1.0
         vx: 0
         vy: 0
         state: 0

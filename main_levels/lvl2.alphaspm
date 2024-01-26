@@ -3,32 +3,11 @@ groups:
     action: BaseGroup
     collide: BaseGroup
 sprites:
-    no-name: kill
-        x: 3.0
-        y: 5.0
-        vx: 0.0
-        vy: 0.0
-        state: 0
-        action
-    no-name: kill
-        x: 6.0
-        y: 5.0
-        vx: 0.0
-        vy: 0.0
-        state: 0
-        action
-    exit1: exit
+    exit1: red_exit
         x: 11.0
-        y: 1.0
-        vx: 0.0
-        vy: 0.0
-        state: 0
-        action
-    no-name: kill
-        x: 10.0
-        y: 5.0
-        vx: 0.0
-        vy: 0.0
+        y: 2.0
+        vx: 0
+        vy: 0
         state: 0
         action
     no-name: player
@@ -38,17 +17,3 @@ sprites:
         vy: 0.1
         state: 0
         player
-    btn1: button
-        x: 6.0
-        y: 4.0
-        vx: 0
-        vy: 0
-        state: 0
-        action
-    m1: move
-        x: 7.0
-        y: 8.0
-        vx: 0
-        vy: 0
-        state: 0
-        collide

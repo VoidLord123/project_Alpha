@@ -14,7 +14,7 @@ from lib.modules.MapMaker import MapMaker
 if __name__ == "__main__":
 
     pygame.init()
-    level_name = "lvl1"
+    level_name = "lvl2"
     n, m = 20, 20
     size = w, h = (1280, 720)
     if not os.path.exists(os.path.join("main_levels",

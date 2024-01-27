@@ -95,11 +95,13 @@ class MainMenu:
             self.draw_text("Escape - выход в главное меню. Escape в главном меню выход из игры", "black",
                            (16, 5), self.board.cells_height * 0.75)
             self.draw_text("Рекомендуется играть в полноэкранном режиме", "black", (16, 6), self.board.cells_height)
-            self.draw_text("Создатели:", "black", (16, 7), self.board.cells_height)
-            self.draw_text("Калинин Иван(VoidLord)", "black", (16, 9), self.board.cells_height)
+            self.draw_text("Следующая реплика диалога - клик мышки", "black", (16, 7), self.board.cells_height)
+            self.draw_text("Создатели:", "black", (16, 9), self.board.cells_height)
+            self.draw_text("Калинин Иван(VoidLord)", "black", (16, 11), self.board.cells_height)
             # Я убрал убогую подпись 123 которая в моем гите чисто потому что оригинальный ник занят был(
             self.draw_text("Галюшин Ярослав(D4rkSn0w)", "black", (16, 10), self.board.cells_height)
-            self.draw_text("Назад", "black", (16, 16), self.board.cells_height, True)
+            self.draw_text("Назад", "black", (12, 16), self.board.cells_height, True)
+            self.draw_text("FPS Counter", "black", (20, 16), self.board.cells_height, True)
         elif self.mode == "creating1":
             self.draw_text("Введите имя уровня", "black", (16, 5), self.board.cells_height)
             self.draw_text("Далее", "black", (16, 10), self.board.cells_height, True)
@@ -119,7 +121,8 @@ class MainMenu:
                 self.draw_text("Ошибка! Введена пустая строка или уровень не найден!", "red", (16, 12),
                                self.board.cells_height, alpha=self.tick)
         elif self.mode == "endgame":
-            self.draw_text("Поздравляем! Вы сбежали из симуляции!", "black", (16, 3), self.board.cells_height * 1.5)
+            self.draw_text("Поздравляем! Вы прошли игру на одну из концовок!", "black", (16, 3),
+                           self.board.cells_height * 1.5)
             self.draw_text("Спасибо за прохождение!", "black", (16, 5), self.board.cells_height)
             self.draw_text("Вы можете сбросить сохранение или сразу вернуться в главное меню", "black",
                            (16, 7), self.board.cells_height)
@@ -140,7 +143,8 @@ class MainMenu:
             }
         elif self.mode == "info":
             actions = {
-                "back": self.get_rect_by_text("Назад", "black", (16, 16), self.board.cells_height, True)
+                "back": self.get_rect_by_text("Назад", "black", (12, 16), self.board.cells_height, True),
+                "fps": self.get_rect_by_text("FPS Counter", "black", (20, 16), self.board.cells_height, True)
             }
         elif self.mode == "creating1":
             actions = {
@@ -233,6 +237,8 @@ class MainMenu:
                 elif i == "reset":
                     with open("save", mode="w", encoding="utf-8") as file:
                         file.write("lvl1")
+                elif i == "fps":
+                    self.linked_game.show_fps = not self.linked_game.show_fps
             if flag and flag2:
                 self.ok_click.play()
             elif flag2:

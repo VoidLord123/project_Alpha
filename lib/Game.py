@@ -4,6 +4,7 @@ from lib.modules.LevelLoader import LevelLoader
 from lib.modules.MainMenu import MainMenu
 from lib.modules.MapMaker import MapMaker
 from lib.constants import FPS
+from sys import exit
 
 
 class Game:
@@ -16,7 +17,7 @@ class Game:
         self.running = True
         self.esc_mode = False
         self.clock = pygame.time.Clock()
-        self.show_fps = True
+        self.show_fps = False
         self.fps_font = pygame.font.Font("fonts/pixel_font2.ttf", 20)
         pygame.mixer.music.load("sounds/music.wav")
         pygame.mixer.music.set_volume(0.2)

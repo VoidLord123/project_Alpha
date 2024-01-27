@@ -16,7 +16,8 @@ if __name__ == "__main__":
     running = True
 
     group = SpriteGroup()
-    tst_sprite = DialogSprite(10, 100, 300, 20, "Привет мир Привет", pygame.font.Font("./fonts/pixel_font2.ttf"), 3, group)
+    tst_sprite = DialogSprite(10, 100, 300, 20, "Привет мир Привет",
+                              pygame.font.Font("./fonts/pixel_font2.ttf"), 3, group)
     tst_sprite.rect.x = 10
     tst_sprite.rect.y = 100
     while running:

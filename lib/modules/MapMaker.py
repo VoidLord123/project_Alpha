@@ -34,7 +34,7 @@ class MapMaker:
             y = 7 + x // 6
             self.blocks_dict.setdefault(i, [])
             self.blocks_dict[i].append((False, x, y))
-            self.main_board.board[y][x] = LINKS[i]()
+            self.main_board.board[y][x] = LINKS[i](self.main_board.cells_width, self.main_board.cells_height)
         x, y = -1, 3
         state = 0
         for i in self.sprites:
@@ -46,11 +46,12 @@ class MapMaker:
             self.blocks_dict[i].append((False, x + 28, y))
             sprite = SPRITES[i]((x + 28) * self.main_board.cells_width + self.main_board.offset_horizontal,
                                 y * self.main_board.cells_height + self.main_board.offset_vertical,
-                                *BASIC_PARAMS[class_name], self.main_board.cells_width, self.main_board.cells_height,
+                                *BASIC_PARAMS[class_name], self.main_board.cells_width / SPRITES[i].cell_width
+                                , self.main_board.cells_height / SPRITES[i].cell_height,
                                 state=state)
             if class_name == "MovedSprite":
                 state = (state + 1) % 2
-            self.main_board.board[y][x + 28] = BaseCell()
+            self.main_board.board[y][x + 28] = BaseCell(self.main_board.cells_width, self.main_board.cells_height)
             self.sprite_group.add(sprite)
         self.items = self.blocks + self.sprites
         self.ok_click = pygame.mixer.Sound("sounds/ok_click.wav")
@@ -103,12 +104,13 @@ class MapMaker:
                 find = self.inner_board.find_obj(cx, cy)
                 if find:
                     find[0].kill()
-                self.inner_board.board[cy][cx] = LINKS[self.chosen_block[0]]()
+                self.inner_board.board[cy][cx] = LINKS[self.chosen_block[0]](self.inner_board.cells_width,
+                                                                             self.inner_board.cells_height)
             else:
                 sprite = SPRITES[self.chosen_block[0]](cx, cy, *BASIC_PARAMS[SPRITES[self.chosen_block[0]].__name__],
                                                        self.main_board.cells_width, self.main_board.cells_height,
                                                        state=self.chosen_block[1])
-                self.inner_board.board[cy][cx] = BaseCell()
+                self.inner_board.board[cy][cx] = BaseCell(self.main_board.cells_width, self.main_board.cells_height)
                 self.inner_board.add_sprite(sprite)
 
     def get_rect(self, start_cell, w, h):  # все в ячейках

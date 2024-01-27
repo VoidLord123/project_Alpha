@@ -6,7 +6,7 @@ class Sprite(pygame.sprite.Sprite):
     cell_width = 1
     cell_height = 1
 
-    def __init__(self, x, y, vx, vy, wc, hc,  *group, state=0, linked_levelboard=None):
+    def __init__(self, x, y, vx, vy, wc, hc, *group, state=0, linked_levelboard=None):
         super().__init__(*group)
         self.images = []
         self.linked_levelboard = linked_levelboard

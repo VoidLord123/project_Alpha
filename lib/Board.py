@@ -30,7 +30,7 @@ class Board:
             self.offset_y_sm = (screen_size[1] - self.cells_height * m - self.offset_vertical * 2) // 2
         self.offset_vertical += self.offset_y_sm
         self.offset_horizontal += self.offset_x_sm
-        self.board = [[Cell([])] * self.n for _ in range(m)]
+        self.board = [[Cell(self.cells_width, self.cells_height, [])] * self.n for _ in range(m)]
 
     def get_cell(self, x, y):
         """
@@ -79,15 +79,16 @@ class Board:
         self.n = n
         self.m = m
         self.screen_size = screen_size
-        self.board = [[BaseCell()] * n for _ in range(m)]
-        self.offset_vertical -= self.offset_y_sm
-        self.offset_horizontal -= self.offset_x_sm
-        self.cells_height = (self.screen_size[1] - 2 * self.offset_vertical) // n
-        self.cells_width = (self.screen_size[0] - 2 * self.offset_horizontal) // m
+
+        # self.offset_vertical -= self.offset_y_sm
+        # self.offset_horizontal -= self.offset_x_sm
+        self.cells_height = (self.screen_size[1] - 2 * self.offset_vertical) // m
+        self.cells_width = (self.screen_size[0] - 2 * self.offset_horizontal) // n
         self.cells_width, self.cells_height = (
             min(self.cells_width, self.cells_height), min(self.cells_width, self.cells_height))
         self.offset_x_sm = 0
         self.offset_y_sm = 0
+        self.board = [[BaseCell(self.cells_width, self.cells_height)] * n for _ in range(m)]
         if self.cells_width * n != self.screen_size[0]:
             self.offset_x_sm = (self.screen_size[0] - self.cells_width * n - self.offset_horizontal * 2) // 2
         if self.cells_height * m != self.screen_size[1]:

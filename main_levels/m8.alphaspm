@@ -1,0 +1,355 @@
+groups:
+    player: BaseGroup
+    action: BaseGroup
+    collide: BaseGroup
+sprites:
+    no-name: kill
+        x: 6.0
+        y: 16.0
+        vx: 0
+        vy: 0
+        state: 0
+        action
+    no-name: kill
+        x: 7.0
+        y: 16.0
+        vx: 0
+        vy: 0
+        state: 0
+        action
+    no-name: kill
+        x: 8.0
+        y: 16.0
+        vx: 0
+        vy: 0
+        state: 0
+        action
+    no-name: kill
+        x: 9.0
+        y: 16.0
+        vx: 0
+        vy: 0
+        state: 0
+        action
+    no-name: kill
+        x: 10.0
+        y: 16.0
+        vx: 0
+        vy: 0
+        state: 0
+        action
+    no-name: kill
+        x: 11.0
+        y: 16.0
+        vx: 0
+        vy: 0
+        state: 0
+        action
+    no-name: kill
+        x: 12.0
+        y: 16.0
+        vx: 0
+        vy: 0
+        state: 0
+        action
+    no-name: kill
+        x: 13.0
+        y: 16.0
+        vx: 0
+        vy: 0
+        state: 0
+        action
+    no-name: kill
+        x: 14.0
+        y: 16.0
+        vx: 0
+        vy: 0
+        state: 0
+        action
+    no-name: kill
+        x: 15.0
+        y: 16.0
+        vx: 0
+        vy: 0
+        state: 0
+        action
+    no-name: kill
+        x: 16.0
+        y: 16.0
+        vx: 0
+        vy: 0
+        state: 0
+        action
+    no-name: kill
+        x: 17.0
+        y: 16.0
+        vx: 0
+        vy: 0
+        state: 0
+        action
+    no-name: kill
+        x: 18.0
+        y: 16.0
+        vx: 0
+        vy: 0
+        state: 0
+        action
+    no-name: kill
+        x: 19.0
+        y: 16.0
+        vx: 0
+        vy: 0
+        state: 0
+        action
+    no-name: kill
+        x: 20.0
+        y: 16.0
+        vx: 0
+        vy: 0
+        state: 0
+        action
+    no-name: kill
+        x: 21.0
+        y: 16.0
+        vx: 0
+        vy: 0
+        state: 0
+        action
+    no-name: kill
+        x: 22.0
+        y: 16.0
+        vx: 0
+        vy: 0
+        state: 0
+        action
+    no-name: kill
+        x: 24.0
+        y: 16.0
+        vx: 0
+        vy: 0
+        state: 0
+        action
+    no-name: kill
+        x: 23.0
+        y: 16.0
+        vx: 0
+        vy: 0
+        state: 0
+        action
+    no-name: kill
+        x: 40.0
+        y: 16.0
+        vx: 0
+        vy: 0
+        state: 0
+        action
+    no-name: kill
+        x: 39.0
+        y: 16.0
+        vx: 0
+        vy: 0
+        state: 0
+        action
+    no-name: kill
+        x: 38.0
+        y: 16.0
+        vx: 0
+        vy: 0
+        state: 0
+        action
+    no-name: kill
+        x: 37.0
+        y: 16.0
+        vx: 0
+        vy: 0
+        state: 0
+        action
+    no-name: kill
+        x: 36.0
+        y: 16.0
+        vx: 0
+        vy: 0
+        state: 0
+        action
+    no-name: kill
+        x: 35.0
+        y: 16.0
+        vx: 0
+        vy: 0
+        state: 0
+        action
+    no-name: kill
+        x: 34.0
+        y: 16.0
+        vx: 0
+        vy: 0
+        state: 0
+        action
+    no-name: kill
+        x: 33.0
+        y: 16.0
+        vx: 0
+        vy: 0
+        state: 0
+        action
+    no-name: kill
+        x: 32.0
+        y: 16.0
+        vx: 0
+        vy: 0
+        state: 0
+        action
+    no-name: kill
+        x: 30.0
+        y: 16.0
+        vx: 0
+        vy: 0
+        state: 0
+        action
+    no-name: kill
+        x: 29.0
+        y: 16.0
+        vx: 0
+        vy: 0
+        state: 0
+        action
+    no-name: kill
+        x: 28.0
+        y: 16.0
+        vx: 0
+        vy: 0
+        state: 0
+        action
+    no-name: kill
+        x: 27.0
+        y: 16.0
+        vx: 0
+        vy: 0
+        state: 0
+        action
+    no-name: kill
+        x: 26.0
+        y: 16.0
+        vx: 0
+        vy: 0
+        state: 0
+        action
+    no-name: kill
+        x: 25.0
+        y: 16.0
+        vx: 0
+        vy: 0
+        state: 0
+        action
+    no-name: kill
+        x: 31.0
+        y: 16.0
+        vx: 0
+        vy: 0
+        state: 0
+        action
+    no-name: kill
+        x: 1.0
+        y: 16.0
+        vx: 0
+        vy: 0
+        state: 0
+        action
+    no-name: kill
+        x: 2.0
+        y: 16.0
+        vx: 0
+        vy: 0
+        state: 0
+        action
+    no-name: kill
+        x: 4.0
+        y: 16.0
+        vx: 0
+        vy: 0
+        state: 0
+        action
+    no-name: kill
+        x: 5.0
+        y: 16.0
+        vx: 0
+        vy: 0
+        state: 0
+        action
+    no-name: kill
+        x: 3.0
+        y: 16.0
+        vx: 0
+        vy: 0
+        state: 0
+        action
+    btn1: button
+        x: 1.0
+        y: 7.0
+        vx: 0
+        vy: 0
+        state: 0
+        action
+    no-name: kill
+        x: 8.0
+        y: 5.0
+        vx: 0
+        vy: 0
+        state: 0
+        action
+    move1: move
+        x: 10.0
+        y: 6.0
+        vx: 0
+        vy: 0
+        state: 1
+        collide
+    move2: move
+        x: 23.0
+        y: 6.0
+        vx: 0
+        vy: 0
+        state: 1
+        collide
+    btn2: button
+        x: 28.0
+        y: 10.0
+        vx: 0
+        vy: 0
+        state: 0
+        action
+    no-name: kill
+        x: 21.0
+        y: 5.0
+        vx: 0
+        vy: 0
+        state: 0
+        action
+    no-name: kill
+        x: 34.0
+        y: 5.0
+        vx: 0
+        vy: 0
+        state: 0
+        action
+    no-name: kill
+        x: 33.0
+        y: 5.0
+        vx: 0
+        vy: 0
+        state: 0
+        action
+    exit1: exit
+        x: 40.0
+        y: 3.0
+        vx: 0
+        vy: 0
+        state: 0
+        action
+    no-name: player
+        x: 1.0
+        y: 2.0
+        vx: 0.1
+        vy: 0.1
+        state: 0
+        player

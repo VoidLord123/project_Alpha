@@ -3,7 +3,8 @@ import pygame
 
 
 class InputSprite(Sprite):
-    def __init__(self, x, y, font: pygame.font.Font, max_len, border, *group, standard_symbol="A", height, color="black"):
+    def __init__(self, x, y, font: pygame.font.Font, max_len, border, *group, standard_symbol="A", height,
+                 color="black"):
         super().__init__(x, y, 0, 0, 0, 0, *group)
         self.height = height
         self.color = color

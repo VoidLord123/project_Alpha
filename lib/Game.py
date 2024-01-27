@@ -24,10 +24,10 @@ class Game:
 
     def toggle_fullscreen(self):
         if self.is_fullscreen:
-            self.screen = pygame.display.set_mode(self.window_size)
+            self.screen = pygame.display.set_mode(self.window_size,  vsync=1)
             self.current_module.set_screen_size(self.window_size)
         else:
-            self.screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
+            self.screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN, vsync=1)
             self.current_module.set_screen_size(self.screen.get_size())
         self.is_fullscreen = not self.is_fullscreen
 
@@ -51,7 +51,7 @@ class Game:
             self.current_module.update()
         self.current_module.render(self.screen)
         if self.show_fps:
-            self.screen.blit(self.fps_font.render(str(self.clock.get_fps()), 1, "black"), (20, 20))
+            self.screen.blit(self.fps_font.render(str(int(self.clock.get_fps())), 1, "black"), (20, 20))
         pygame.display.flip()
         self.clock.tick(FPS)
 

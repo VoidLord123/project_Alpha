@@ -1,10 +1,9 @@
 import pygame
 from lib.Sprite import Sprite
-
-ACCELERATION_PLAYER_X = 0.2
-ACCELERATION_PLAYER_Y = 0.5
+ACCELERATION_PLAYER_X = 0.4
+ACCELERATION_PLAYER_Y = 0.7
 MAX_VELOCITY_PLAYER_X = 7
-MAX_GRAVITY_SPEED = 10
+MAX_GRAVITY_SPEED = 30
 VELOCITY_PLAYER_JUMP = -20
 TRANSFORM = 0.01
 
@@ -45,7 +44,7 @@ class PlayerSprite(Sprite):
         if keys[pygame.K_LEFT]:
             self.vx -= ACCELERATION_PLAYER_X
 
-        if not keys[pygame.K_RIGHT] and not keys[pygame.K_LEFT]:
+        if not keys[pygame.K_RIGHT] and not keys[pygame.K_LEFT] and self.vx != 0:
             self.vx += (-1 if self.vx > 0 else 1) * ACCELERATION_PLAYER_X
 
         if abs(self.vx) > MAX_VELOCITY_PLAYER_X:
@@ -78,6 +77,7 @@ class PlayerSprite(Sprite):
         self.vy += ACCELERATION_PLAYER_Y
         if self.vy > MAX_GRAVITY_SPEED:
             self.vy = MAX_GRAVITY_SPEED
+        self.vx = round(self.vx, 4)
         self.rect.x += self.vx * self.wc * TRANSFORM
         while self.check_collides() and self.vx != 0:
             self.rect.x -= self.vx / abs(self.vx)

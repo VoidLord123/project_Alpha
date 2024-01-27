@@ -46,7 +46,7 @@ class LevelBoard(Board):
             source = list(map(lambda x: x.split(";"), source))
             for i in range(self.m):
                 for j in range(self.n):
-                    self.board[i][j] = LINKS[source[i][j]]()
+                    self.board[i][j] = LINKS[source[i][j]](self.cells_width, self.cells_height)
 
     def save(self, filename: str):
         with open(filename, mode="w", encoding="utf-8") as file:
@@ -195,7 +195,7 @@ class LevelBoard(Board):
         y_measure = self.screen_size[1] // 10
         sprite = DialogSprite(x_measure * 2, y_measure * 8 - y_sep, x_measure * 6, y_measure * 2 - y_sep,
                               self.dialogs[self.cnt],
-                              pygame.font.Font("fonts/pixel_font2.ttf", self.cells_height // 4), 40, 1,
+                              pygame.font.Font("fonts/pixel_font2.ttf", y_measure // 6), 40, 1,
                               self.always_update_group)
 
     def find_obj(self, x, y):

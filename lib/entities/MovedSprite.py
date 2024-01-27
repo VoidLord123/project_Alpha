@@ -7,8 +7,10 @@ class MovedSprite(Sprite):
     paths = ["img/left.png", "img/right.png", "img/up.png", "img/down.png"]
     cell_width = 1
     cell_height = 1
+    actioned = False
 
     def action(self):
+        self.actioned = True
         self.vx = -1 if self.state == 0 else 1 if self.state == 1 else 0
         self.vy = -1 if self.state == 2 else 1 if self.state == 3 else 0
 
@@ -24,8 +26,50 @@ class MovedSprite(Sprite):
                     return True
         return False
 
+    def check_reverse(self):
+        reverse_list = self.linked_levelboard.get_reverse_objects()
+        for i in reverse_list:
+            if self.rect.colliderect(i):
+                return True
+        return False
+
+    def reverse(self):
+        self.state = (self.state + 1) if self.state in [0, 2] else (self.state - 1)
+        self.vx = -self.vx
+        self.vy = -self.vy
+        self.set_image(self.state)
+
     def update(self, *args):
         super().update(*args)
+        x, y = self.vx, self.vy
+        self.rect.x += x
+        if self.check_reverse():
+            self.reverse()
+        self.rect.x -= x
+        self.rect.y += y
+        if self.check_reverse():
+            self.reverse()
+        self.rect.y -= y
+        if self.vx == 0 and self.state in (0, 1) and self.actioned:
+            v = -1 if self.state == 0 else 1 if self.state == 1 else 0
+            collide_sprites = self.linked_levelboard.get_player_sprites()
+            self.rect.x += v
+            if self.check_collides():
+                self.rect.x -= v
+            elif pygame.sprite.spritecollideany(self, collide_sprites):
+                self.rect.x -= v
+            else:
+                self.vx = v
+        if self.vy == 0 and self.state in (2, 3) and self.actioned:
+            v = -1 if self.state == 2 else 1 if self.state == 3 else 0
+            collide_sprites = self.linked_levelboard.get_player_sprites()
+            self.rect.y += v
+            if self.check_collides():
+                self.rect.y -= v
+            elif pygame.sprite.spritecollideany(self, collide_sprites):
+                self.rect.y -= v
+            else:
+                self.vy = v
         if self.vx != 0 or self.vy != 0:
             self.rect.x += self.vx * self.cell_width
             f1 = False
@@ -41,3 +85,31 @@ class MovedSprite(Sprite):
                 self.vx = 0
             if f2:
                 self.vy = 0
+            if self.linked_levelboard is not None:
+                collide_sprites = self.linked_levelboard.get_player_sprites()
+                while pygame.sprite.spritecollideany(self, collide_sprites):
+                    for sprite in collide_sprites.sprites():
+                        if self.vx:
+                            sprite.rect.x += self.vx
+                            if sprite.check_collides():
+                                sprite.rect.x -= self.vx
+                                self.rect.x -= self.vx
+                                self.vx = 0
+                        elif self.vy:
+                            sprite.rect.y += self.vy
+                            if sprite.check_collides():
+                                sprite.rect.y -= self.vy
+                                self.rect.y -= self.vy
+                                self.vy = 0
+                for sprite in collide_sprites.sprites():
+                    if pygame.Rect(sprite.rect.x, sprite.rect.y + 1, sprite.wc, sprite.hc).colliderect(self.rect):
+                        sprite.rect.x += self.vx
+                        if sprite.check_collides():
+                            sprite.rect.x -= self.vx
+                if self.vy > 0:
+                    for sprite in collide_sprites.sprites():
+                        if pygame.Rect(sprite.rect.x, sprite.rect.y + self.vy * 2,
+                                       sprite.rect.w, sprite.rect.h).colliderect(self.rect):
+                            sprite.rect.y += self.vy
+                            if sprite.check_collides():
+                                sprite.rect.y -= self.vy

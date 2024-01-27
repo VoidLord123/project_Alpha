@@ -15,8 +15,10 @@ class KillSprite(Sprite):
 
     def update(self, *args):
         super().update(*args)
-        if self.linked_levelboard is not None:
+        if (self.linked_levelboard is not None and
+                pygame.sprite.spritecollideany(self, self.linked_levelboard.get_player_sprites())):
             for i in self.linked_levelboard.get_player_sprites().sprites():
                 if pygame.sprite.collide_mask(self, i):
                     self.action()
+                    self.linked_levelboard.linked_loader.skip_dialog = True
                     break

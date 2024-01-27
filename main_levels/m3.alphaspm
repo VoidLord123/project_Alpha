@@ -1,0 +1,124 @@
+groups:
+    player: BaseGroup
+    action: BaseGroup
+    collide: BaseGroup
+sprites:
+    no-name: kill
+        x: 8.0
+        y: 3.0
+        vx: 0.0
+        vy: 0.0
+        state: 1
+        action
+    no-name: kill
+        x: 7.0
+        y: 8.0
+        vx: 0.0
+        vy: 0.0
+        state: 0
+        action
+    no-name: kill
+        x: 4.0
+        y: 8.0
+        vx: 0.0
+        vy: 0.0
+        state: 0
+        action
+    no-name: kill
+        x: 5.0
+        y: 8.0
+        vx: 0.0
+        vy: 0.0
+        state: 0
+        action
+    no-name: kill
+        x: 6.0
+        y: 8.0
+        vx: 0.0
+        vy: 0.0
+        state: 0
+        action
+    no-name: kill
+        x: 10.0
+        y: 7.0
+        vx: 0.0
+        vy: 0.0
+        state: 0
+        action
+    no-name: kill
+        x: 18.0
+        y: 5.0
+        vx: 0.0
+        vy: 0.0
+        state: 0
+        action
+    no-name: player
+        x: 1.0
+        y: 8.0
+        vx: 0.1
+        vy: 0.1
+        state: 0
+        player
+    no-name: kill
+        x: 26.0
+        y: 4.0
+        vx: 0.0
+        vy: 0.0
+        state: 0
+        action
+    no-name: kill
+        x: 25.0
+        y: 4.0
+        vx: 0.0
+        vy: 0.0
+        state: 0
+        action
+    exit1: exit
+        x: 28.0
+        y: 2.0
+        vx: 0.0
+        vy: 0.0
+        state: 0
+        action
+    no-name: kill
+        x: 15.0
+        y: 8.0
+        vx: 0
+        vy: 0
+        state: 0
+        action
+    no-name: kill
+        x: 16.0
+        y: 8.0
+        vx: 0
+        vy: 0
+        state: 0
+        action
+    no-name: kill
+        x: 19.0
+        y: 8.0
+        vx: 0
+        vy: 0
+        state: 0
+        action
+    no-name: kill
+        x: 23.0
+        y: 8.0
+        vx: 0
+        vy: 0
+        state: 0
+        action
+    no-name: kill
+        x: 22.0
+        y: 8.0
+        vx: 0
+        vy: 0
+        state: 0
+        action
+    no-name: kill
+        x: 27.0
+        y: 8.0
+        vx: 0
+        vy: 0
+        state: 0
+        action

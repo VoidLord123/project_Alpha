@@ -4,6 +4,8 @@ from lib.Cell import Cell
 from lib.constants import LINKS, SPRITES, GROUPS, BASIC_GROUPS, CLASS_NAME_TO_CLASS
 from lib.Board import Board
 from lib.SpriteGroup import SpriteGroup
+from lib.entities.DialogSprite import DialogSprite
+from lib.AnimatedSprite import AnimatedSprite
 
 """
 Класс уровня. Имеет сохранения и загрузки в файлы .alphamap
@@ -26,6 +28,10 @@ class LevelBoard(Board):
         self.named_sprites = {}
         self.groups = {}
         self.all_sprites = SpriteGroup()
+        self.always_update_group = SpriteGroup()
+        self.animation_group = SpriteGroup()
+        self.active_dialog = False
+        self.dialogs = []
 
     def load(self, filename: str):
         with open(filename, encoding="utf-8", mode="r") as file:
@@ -40,7 +46,7 @@ class LevelBoard(Board):
             source = list(map(lambda x: x.split(";"), source))
             for i in range(self.m):
                 for j in range(self.n):
-                    self.board[i][j] = LINKS[source[i][j]]()
+                    self.board[i][j] = LINKS[source[i][j]](self.cells_width, self.cells_height)
 
     def save(self, filename: str):
         with open(filename, mode="w", encoding="utf-8") as file:
@@ -57,7 +63,7 @@ class LevelBoard(Board):
             file.writelines(map_str)
 
     def load_sprites(self, filename):
-        with open(filename, mode='r', encoding="utf-8") as file:
+        with (open(filename, mode='r', encoding="utf-8") as file):
             info = file.readlines()
             info = list(map(lambda x1: x1.strip("\n").replace("    ", "$").replace("\t", "$"), info))
             info = info[1:]
@@ -98,13 +104,17 @@ class LevelBoard(Board):
                     item = info[i]
                     groups.append(self.groups[item[2:]])
                     i += 1
+
                 if name == "no-name":
-                    sprite_type(x, y, vx, vy, self.cells_width, self.cells_height, *groups, state=state,
-                                linked_levelboard=self)
+                    sprite = sprite_type(x, y, vx, vy, self.cells_width, self.cells_height, *groups, state=state,
+                                         linked_levelboard=self)
                 else:
-                    self.named_sprites[name] = sprite_type(x, y, vx, vy, self.cells_width, self.cells_height,
-                                                           *groups, state=state, linked_levelboard=self)
+                    sprite = sprite_type(x, y, vx, vy, self.cells_width, self.cells_height,
+                                         *groups, state=state, linked_levelboard=self)
+                    self.named_sprites[name] = sprite
                     self.named_sprites[name].name = name  # name, name, name, name. Нужно для некоторых возможностей.
+                if isinstance(sprite, AnimatedSprite):
+                    self.animation_group.add(sprite)
 
     def get_cell_float(self, x, y):
         x_new, y_new = x - self.offset_horizontal, y - self.offset_vertical
@@ -139,7 +149,8 @@ class LevelBoard(Board):
                 names[j] = i
             n_of_exit = 1
             for i in self.all_sprites.sprites():
-                if names.get(i, 'no-name') == "no-name" and  spr_to_string[i.__class__] == "exit":
+                exits_name = ["exit", "green_exit", "true_exit", "core", "red_true_exit", "red_exit"]
+                if names.get(i, 'no-name') == "no-name" and spr_to_string[i.__class__] in exits_name:
                     names[i] = "exit" + str(n_of_exit)
                     n_of_exit += 1
                 string += f"    {names.get(i, 'no-name')}: {spr_to_string[i.__class__]}\n"
@@ -165,6 +176,28 @@ class LevelBoard(Board):
                                                  sprite.vy, self.cells_width, self.cells_height, self.all_sprites,
                                                  self.groups[BASIC_GROUPS[class_name]], state=sprite.state)
 
+    def start_dialog_sequence(self):
+        self.active_dialog = True
+        self.cnt = -1
+
+    def change_dialog(self):
+        for sprite in self.always_update_group.sprites():
+            if sprite.__class__.__name__ == 'DialogSprite':
+                sprite.kill()
+        self.cnt += 1
+        if self.cnt == len(self.dialogs):
+            self.cnt = -1
+            self.active_dialog = False
+            self.linked_loader.skipped_dialogs.append(self.dialogs)
+            return
+        x_measure = self.screen_size[0] // 10
+        y_sep = self.screen_size[1] // 100
+        y_measure = self.screen_size[1] // 10
+        sprite = DialogSprite(x_measure * 2, y_measure * 8 - y_sep, x_measure * 6, y_measure * 2 - y_sep,
+                              self.dialogs[self.cnt],
+                              pygame.font.Font("fonts/pixel_font2.ttf", y_measure // 6), 40, 1,
+                              self.always_update_group)
+
     def find_obj(self, x, y):
         find = list(filter(lambda z: (x * self.cells_width + self.offset_horizontal,
                                       y * self.cells_height + self.offset_vertical) == (z.rect.x, z.rect.y),
@@ -186,6 +219,21 @@ class LevelBoard(Board):
 
         return collide_list
 
+    def get_reverse_objects(self):
+        block_list = []
+        y = 0
+        for i in self.board:
+            x = 0
+            for j in i:
+                if j.__class__.__name__ == 'ReverseBlock':
+                    a = j.get_image(self.cells_width, self.cells_height).get_rect()
+                    a.x, a.y = self.get_cell_coord(x, y)
+                    block_list.append(a)
+                x += 1
+            y += 1
+
+        return block_list
+
     def get_collide_sprites(self):
         sprites = self.groups.get("collide", None)
         if sprites is not None:
@@ -204,6 +252,11 @@ class LevelBoard(Board):
     def render(self, screen):
         super().render(screen)
         self.all_sprites.draw(screen)
+        self.always_update_group.draw(screen)
 
     def update(self, *args):
-        self.all_sprites.update(*args)
+        if not self.active_dialog:
+            self.all_sprites.update(*args)
+        else:
+            self.animation_group.update()
+        self.always_update_group.update(*args)

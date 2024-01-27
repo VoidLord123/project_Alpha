@@ -1,0 +1,152 @@
+groups:
+    player: BaseGroup
+    action: BaseGroup
+    collide: BaseGroup
+sprites:
+    move1: move
+        x: 11.0
+        y: 18.0
+        vx: 0.0
+        vy: 0.0
+        state: 2
+        collide
+    move2: move
+        x: 17.0
+        y: 12.0
+        vx: 0.0
+        vy: 0.0
+        state: 2
+        collide
+    btn1: button
+        x: 18.0
+        y: 18.0
+        vx: 0.0
+        vy: 0.0
+        state: 0
+        action
+    no-name: kill
+        x: 16.0
+        y: 18.0
+        vx: 0.0
+        vy: 0.0
+        state: 0
+        action
+    no-name: kill
+        x: 15.0
+        y: 18.0
+        vx: 0.0
+        vy: 0.0
+        state: 0
+        action
+    no-name: kill
+        x: 4.0
+        y: 18.0
+        vx: 0.0
+        vy: 0.0
+        state: 0
+        action
+    no-name: kill
+        x: 8.0
+        y: 18.0
+        vx: 0.0
+        vy: 0.0
+        state: 0
+        action
+    no-name: kill
+        x: 7.0
+        y: 18.0
+        vx: 0.0
+        vy: 0.0
+        state: 0
+        action
+    no-name: kill
+        x: 4.0
+        y: 12.0
+        vx: 0.0
+        vy: 0.0
+        state: 0
+        action
+    no-name: kill
+        x: 3.0
+        y: 12.0
+        vx: 0.0
+        vy: 0.0
+        state: 0
+        action
+    no-name: kill
+        x: 9.0
+        y: 12.0
+        vx: 0.0
+        vy: 0.0
+        state: 0
+        action
+    no-name: kill
+        x: 8.0
+        y: 12.0
+        vx: 0.0
+        vy: 0.0
+        state: 0
+        action
+    btn2: button
+        x: 1.0
+        y: 12.0
+        vx: 0.0
+        vy: 0.0
+        state: 0
+        action
+    no-name: kill
+        x: 14.0
+        y: 6.0
+        vx: 0.0
+        vy: 0.0
+        state: 0
+        action
+    no-name: kill
+        x: 13.0
+        y: 6.0
+        vx: 0.0
+        vy: 0.0
+        state: 0
+        action
+    no-name: kill
+        x: 10.0
+        y: 6.0
+        vx: 0.0
+        vy: 0.0
+        state: 0
+        action
+    no-name: kill
+        x: 9.0
+        y: 6.0
+        vx: 0.0
+        vy: 0.0
+        state: 0
+        action
+    no-name: kill
+        x: 5.0
+        y: 6.0
+        vx: 0.0
+        vy: 0.0
+        state: 0
+        action
+    no-name: kill
+        x: 6.0
+        y: 6.0
+        vx: 0.0
+        vy: 0.0
+        state: 0
+        action
+    exit1: red_exit
+        x: 2.0
+        y: 5.0
+        vx: 0.0
+        vy: 0.0
+        state: 0
+        action
+    no-name: player
+        x: 1.0
+        y: 18.0
+        vx: 0.1
+        vy: 0.1
+        state: 0
+        player

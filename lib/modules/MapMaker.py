@@ -34,7 +34,7 @@ class MapMaker:
             y = 7 + x // 6
             self.blocks_dict.setdefault(i, [])
             self.blocks_dict[i].append((False, x, y))
-            self.main_board.board[y][x] = LINKS[i]()
+            self.main_board.board[y][x] = LINKS[i](self.main_board.cells_width, self.main_board.cells_height)
         x, y = -1, 3
         state = 0
         for i in self.sprites:
@@ -46,13 +46,15 @@ class MapMaker:
             self.blocks_dict[i].append((False, x + 28, y))
             sprite = SPRITES[i]((x + 28) * self.main_board.cells_width + self.main_board.offset_horizontal,
                                 y * self.main_board.cells_height + self.main_board.offset_vertical,
-                                *BASIC_PARAMS[class_name], self.main_board.cells_width, self.main_board.cells_height,
+                                *BASIC_PARAMS[class_name], self.main_board.cells_width / SPRITES[i].cell_width
+                                , self.main_board.cells_height / SPRITES[i].cell_height,
                                 state=state)
             if class_name == "MovedSprite":
                 state = (state + 1) % 2
-            self.main_board.board[y][x + 28] = BaseCell()
+            self.main_board.board[y][x + 28] = BaseCell(self.main_board.cells_width, self.main_board.cells_height)
             self.sprite_group.add(sprite)
         self.items = self.blocks + self.sprites
+        self.ok_click = pygame.mixer.Sound("sounds/ok_click.wav")
 
     def set_screen_size(self, screen_size):
         self.screen_size = screen_size
@@ -78,11 +80,13 @@ class MapMaker:
             for i in self.items:
                 for typee in range(len(self.blocks_dict[i])):
                     if self.blocks_dict[i][typee][1] == cx and self.blocks_dict[i][typee][2] == cy:
+                        self.ok_click.play()
                         self.blocks_dict[i][typee] = (True, cx, cy)
                         changed_block = [i, typee]
                         self.chosen_block = [i, typee]
                         break
             if (cx, cy) in [(1, 1), (2, 1), (3, 1), (4, 1)]:
+                self.ok_click.play()
                 self.inner_board.save(self.filename)
                 self.inner_board.save_sprites(self.filename.split('.')[0] + '.alphaspm')
             if changed_block:
@@ -92,18 +96,21 @@ class MapMaker:
                             self.blocks_dict[i][typee] = (False, self.blocks_dict[i][typee][1],
                                                           self.blocks_dict[i][typee][2])
         cell = self.inner_board.get_cell(*pos)
-        if self.chosen_block and self.inner_board.get_cell(*pos) and cell[0] < self.inner_board.n and cell[1] < self.inner_board.m:
+        if (self.chosen_block and self.inner_board.get_cell(*pos) and
+                cell[0] < self.inner_board.n and cell[1] < self.inner_board.m):
+            self.ok_click.play()
             cx, cy = self.inner_board.get_cell(*pos)
             if len(self.chosen_block[0]) == 1:
                 find = self.inner_board.find_obj(cx, cy)
                 if find:
                     find[0].kill()
-                self.inner_board.board[cy][cx] = LINKS[self.chosen_block[0]]()
+                self.inner_board.board[cy][cx] = LINKS[self.chosen_block[0]](self.inner_board.cells_width,
+                                                                             self.inner_board.cells_height)
             else:
                 sprite = SPRITES[self.chosen_block[0]](cx, cy, *BASIC_PARAMS[SPRITES[self.chosen_block[0]].__name__],
                                                        self.main_board.cells_width, self.main_board.cells_height,
                                                        state=self.chosen_block[1])
-                self.inner_board.board[cy][cx] = BaseCell()
+                self.inner_board.board[cy][cx] = BaseCell(self.main_board.cells_width, self.main_board.cells_height)
                 self.inner_board.add_sprite(sprite)
 
     def get_rect(self, start_cell, w, h):  # все в ячейках

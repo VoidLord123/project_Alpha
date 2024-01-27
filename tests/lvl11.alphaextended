@@ -1,0 +1,7 @@
+preview_text: Some4
+exits:
+    exit1: THE_TRUE_END
+links:
+    btn1 -> move1
+dialogs:
+    ["123", "234"]

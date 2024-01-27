@@ -1,0 +1,243 @@
+groups:
+    player: BaseGroup
+    action: BaseGroup
+    collide: BaseGroup
+sprites:
+    move1: move
+        x: 32.0
+        y: 13.0
+        vx: 0.0
+        vy: 0.0
+        state: 2
+        collide
+    no-name: kill
+        x: 33.0
+        y: 12.0
+        vx: 0.0
+        vy: 0.0
+        state: 0
+        action
+    no-name: kill
+        x: 36.0
+        y: 12.0
+        vx: 0.0
+        vy: 0.0
+        state: 0
+        action
+    no-name: kill
+        x: 39.0
+        y: 12.0
+        vx: 0.0
+        vy: 0.0
+        state: 0
+        action
+    btn1: button
+        x: 38.0
+        y: 12.0
+        vx: 0.0
+        vy: 0.0
+        state: 0
+        action
+    no-name: kill
+        x: 33.0
+        y: 18.0
+        vx: 0.0
+        vy: 0.0
+        state: 0
+        action
+    no-name: kill
+        x: 34.0
+        y: 18.0
+        vx: 0.0
+        vy: 0.0
+        state: 0
+        action
+    no-name: kill
+        x: 37.0
+        y: 18.0
+        vx: 0.0
+        vy: 0.0
+        state: 0
+        action
+    no-name: kill
+        x: 35.0
+        y: 4.0
+        vx: 0.0
+        vy: 0.0
+        state: 0
+        action
+    no-name: kill
+        x: 36.0
+        y: 4.0
+        vx: 0.0
+        vy: 0.0
+        state: 0
+        action
+    no-name: kill
+        x: 4.0
+        y: 6.0
+        vx: 0.0
+        vy: 0.0
+        state: 0
+        action
+    no-name: kill
+        x: 3.0
+        y: 6.0
+        vx: 0.0
+        vy: 0.0
+        state: 0
+        action
+    no-name: kill
+        x: 8.0
+        y: 7.0
+        vx: 0.0
+        vy: 0.0
+        state: 0
+        action
+    no-name: kill
+        x: 3.0
+        y: 9.0
+        vx: 0.0
+        vy: 0.0
+        state: 0
+        action
+    no-name: kill
+        x: 7.0
+        y: 13.0
+        vx: 0.0
+        vy: 0.0
+        state: 0
+        action
+    no-name: kill
+        x: 4.0
+        y: 18.0
+        vx: 0.0
+        vy: 0.0
+        state: 0
+        action
+    no-name: kill
+        x: 3.0
+        y: 18.0
+        vx: 0.0
+        vy: 0.0
+        state: 0
+        action
+    no-name: kill
+        x: 13.0
+        y: 18.0
+        vx: 0.0
+        vy: 0.0
+        state: 0
+        action
+    no-name: kill
+        x: 14.0
+        y: 18.0
+        vx: 0.0
+        vy: 0.0
+        state: 0
+        action
+    no-name: kill
+        x: 17.0
+        y: 15.0
+        vx: 0.0
+        vy: 0.0
+        state: 0
+        action
+    no-name: kill
+        x: 12.0
+        y: 13.0
+        vx: 0.0
+        vy: 0.0
+        state: 0
+        action
+    no-name: kill
+        x: 17.0
+        y: 11.0
+        vx: 0.0
+        vy: 0.0
+        state: 0
+        action
+    no-name: kill
+        x: 12.0
+        y: 9.0
+        vx: 0.0
+        vy: 0.0
+        state: 0
+        action
+    no-name: kill
+        x: 17.0
+        y: 7.0
+        vx: 0.0
+        vy: 0.0
+        state: 0
+        action
+    no-name: kill
+        x: 20.0
+        y: 4.0
+        vx: 0.0
+        vy: 0.0
+        state: 0
+        action
+    no-name: kill
+        x: 22.0
+        y: 10.0
+        vx: 0.0
+        vy: 0.0
+        state: 0
+        action
+    no-name: kill
+        x: 21.0
+        y: 10.0
+        vx: 0.0
+        vy: 0.0
+        state: 0
+        action
+    no-name: kill
+        x: 16.0
+        y: 18.0
+        vx: 0.0
+        vy: 0.0
+        state: 0
+        action
+    no-name: kill
+        x: 17.0
+        y: 18.0
+        vx: 0.0
+        vy: 0.0
+        state: 0
+        action
+    move2: move
+        x: 31.0
+        y: 13.0
+        vx: 0.0
+        vy: 0.0
+        state: 3
+        collide
+    no-name: player
+        x: 1.0
+        y: 4.0
+        vx: 0.1
+        vy: 0.1
+        state: 0
+        player
+    exit1: exit
+        x: 38.0
+        y: 17.0
+        vx: 0.0
+        vy: 0.0
+        state: 0
+        action
+    no-name: kill
+        x: 12.0
+        y: 5.0
+        vx: 0.0
+        vy: 0.0
+        state: 0
+        action
+    exit2: red_exit
+        x: 38.0
+        y: 3.0
+        vx: 0
+        vy: 0
+        state: 0
+        action

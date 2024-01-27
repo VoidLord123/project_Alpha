@@ -8,11 +8,12 @@ class ButtonSprite(Sprite):
 
     def __init__(self, x, y, vx, vy, wc, hc,  *group, state=0, linked_levelboard=None):
         super().__init__(x, y, vx, vy, wc, hc, *group, state=state, linked_levelboard=linked_levelboard)
-        self.link = ""
+        self.link = []
 
     def action(self):
-        if self.link != "":
-            self.linked_levelboard.named_sprites[self.link].action()
+        if self.link:
+            for sprite in self.link:
+                self.linked_levelboard.named_sprites[sprite].action()
 
     def update(self, *args):
         super().update(*args)

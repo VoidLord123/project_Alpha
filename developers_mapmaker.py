@@ -14,7 +14,7 @@ from lib.modules.MapMaker import MapMaker
 if __name__ == "__main__":
 
     pygame.init()
-    level_name = "c5"
+    level_name = "m2"
     next_level_name = "c6"
     n, m = 10, 10
     size = w, h = (1600, 900)

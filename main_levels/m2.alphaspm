@@ -18,13 +18,6 @@ sprites:
         state: 0
         action
     no-name: kill
-        x: 7.0
-        y: 15.0
-        vx: 0.0
-        vy: 0.0
-        state: 0
-        action
-    no-name: kill
         x: 8.0
         y: 6.0
         vx: 0.0

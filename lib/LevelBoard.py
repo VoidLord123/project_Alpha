@@ -32,6 +32,7 @@ class LevelBoard(Board):
         self.animation_group = SpriteGroup()
         self.active_dialog = False
         self.dialogs = []
+        self.cached_board = None
 
     def load(self, filename: str):
         with open(filename, encoding="utf-8", mode="r") as file:
@@ -250,7 +251,11 @@ class LevelBoard(Board):
             return sprites
 
     def render(self, screen):
-        super().render(screen)
+        if self.cached_board is None:
+            self.cached_board = pygame.surface.Surface(screen.get_size())
+            self.cached_board.fill("white")
+            super().render(self.cached_board)
+        screen.blit(self.cached_board, (0, 0))
         self.all_sprites.draw(screen)
         self.always_update_group.draw(screen)
 
